@@ -1,2 +1,17 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  border: 2px red solid;
+}
 
+.home {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-left: 800px;
+}
 
+.title {
+  font-size: 40px;
+  padding-top: 200px;
+}
