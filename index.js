@@ -21,7 +21,7 @@ mongoose.connect('mongodb://localhost/Feature-home-page', {useNewUrlParser: true
   });
 
   app.get(['/', '/home'], (request, response) => {
-    //console.log(request);
+    console.log(request);
     response.render('home');
   });
 
