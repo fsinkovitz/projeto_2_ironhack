@@ -4,14 +4,21 @@
   border: 2px red solid;
 }
 
+nav {
+  background-color: #8794C9;
+}
+
+span {
+  display: flex;
+  justify-content: flex-start;
+}
+
 .home {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  margin-left: 800px;
 }
 
 .title {
   font-size: 40px;
-  padding-top: 200px;
 }
