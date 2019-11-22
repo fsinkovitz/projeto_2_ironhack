@@ -1,22 +1,73 @@
 * {
   padding: 0px;
   margin: 0px;
-  border: 0px solid;
+  border: 2px;
 }
 
 nav {
   background-color: #e5dfdf;
   font-family: Arial, Helvetica, sans-serif;
   list-style: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.nav-items {
+  display: flex;
+  float:  row;
+  justify-content: space-between;
 }
 
 .title {
+  margin-left: 40px;
+  padding-top: 10px;
   font-size: 30px;
   color: #222831;
 }
 
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-right: 40px;
+}
+
+.signup {
+  font-weight: 400px;
+  text-align: center;
+  background-color: #e5dfdf;
+  font-size: 30px;
+  color: #222831;
+  border: solid 2px;
+  margin-right: 80px;
+  padding: 10px;
+}
+
+/* Estilizando o botão ao passar o mouse */
+.signup:hover {
+  color: azure; 
+  background-color: #5edfff;
+  border-color: #222831;
+}
+
+.login {
+  font-weight: 400px;
+  text-align: center;
+  background-color: #e5dfdf;
+  font-size: 30px;
+  color: #222831;
+  border: solid 2px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.login:hover {
+  color: azure; 
+  background-color: #5edfff;
+  border-color: #222831;
+}
+
 p {
-  margin-top: 210px;
+  margin-top: 315px;
   margin-left: 35px;
   text-align: center;
   font-family: 'Calistoga', cursive;
@@ -26,38 +77,72 @@ p {
 
 .readerbook {
   width: 1000px;
-  height: 850px;
+  height: 1000px;
 }
 
 .about {
   display: flex;
   flex-direction: row;
+  font-style: italic;
 }
 
-/* .about > div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-} */
-
 footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
   background-color: #393e46;
   list-style: none;
 }
 
-iframe {
-  height: 375px;
-  width: 60%;
+.information {
+  display: flex;
+  flex-direction: column;
+  color: azure;
+  line-height: 35px;
+}
+
+.contact {
+  margin-top: 80px;
+  text-align: center;
 }
 
 .address {
-  font-style: normal;
-  font-size: 0.8em;
-  margin: 0px 0px 30px 0px;
+ font-size: 20px;
+ font-style: normal;
+ font-family: Arial, Helvetica, sans-serif;
+ text-align: center;
 }
 
 h5 {
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 25px;
+  color: azure;
+}
+
+iframe {
+  height: 340px;
+  width: 800px;
+}
+
+.follow {
+  margin-top: 40px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.follow > ul > li {
+  list-style: none;
+}
+
+.follow > ul > li > a {
+  
   font-size: 20px;
   color: azure;
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration: none;
+}
+
+.map {
+  margin-top: 80px;
+  margin-bottom: 35px;
 }
