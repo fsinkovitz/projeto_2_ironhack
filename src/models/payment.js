@@ -3,28 +3,24 @@ const Schema = mongoose.Schema;
 
 const paymentSchema = new Schema(
   {
-    cardNumber: {
+    cardnumber: {
       type: String,
-      required: true,
-      unique: true
+      required: true
     },
 
-    cardExpirationDate: {
+    cardexpirationdate: {
       type: String,
-      required: true,
-      unique: true
+      required: true
     },
 
-    cardCvv: {
+    cardcvv: {
       type: String,
-      required: true,
-      unique: true
+      required: true
     },
 
-    userName: {
+    username: {
       type: String,
-      required: true,
-      unique: true
+      required: true
     },
   }
 );

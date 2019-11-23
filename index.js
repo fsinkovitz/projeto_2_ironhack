@@ -6,6 +6,7 @@ const app = express();
 const PORT = 3000;
 const mongoose = require('mongoose');
 const axios = require('axios').default;
+const Book = require('./src/models/books');
 
 //const mongo_url = process.env.MONGO_URL;
 
@@ -13,7 +14,7 @@ app.set('view engine', 'hbs');
 app.set('views', __dirname + '/src/views');
 app.use(express.static(__dirname + '/public'));
 
-mongoose.connect('mongodb://localhost/Feature-home-page', {useNewUrlParser: true})
+mongoose.connect('mongodb+srv://jesus:F4iC0I35R5snjcIs@cluster0-3dz7l.azure.mongodb.net/ironbook-users?retryWrites=true&w=majority', {useNewUrlParser: true})
   .then(() => {
     console.log('Conexão realizada com sucesso!');
   }).catch(err => {
@@ -26,8 +27,15 @@ mongoose.connect('mongodb://localhost/Feature-home-page', {useNewUrlParser: true
   });
 
   app.get('/details', (request, response) => {
-    console.log(request);
-    response.render('details');
+    // console.log(request);
+    Book.find()
+      .then(bookFromDB => {
+        console.log('Retrieved books from DB:', bookFromDB);
+        response.render('details', { books: bookFromDB });
+    })
+    .catch(error => {
+      console.log('Error: ', err);
+    })
   });
 
   app.get('/login', (request, response) => {

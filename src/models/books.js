@@ -9,8 +9,20 @@ const booksSchema = new Schema(
       unique: true
     },
 
+    gender: {
+      type: String
+    },
+
+    author: {
+      type: String
+    },
+
+    publishcompany: {
+      type: String
+    },
+
     descriprion: {
-      type: String,
+      type: String
     },
 
     value: {
@@ -26,6 +38,10 @@ const booksSchema = new Schema(
     qunatity: {
       type: Number,
       required: true
+    },
+
+    comments: {
+      type: String
     }
   }
 );

@@ -66,6 +66,10 @@ nav {
   border-color: #222831;
 }
 
+a {
+  text-decoration: none;
+}
+
 p {
   margin-top: 315px;
   margin-left: 35px;
