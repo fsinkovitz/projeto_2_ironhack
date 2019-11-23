@@ -19,14 +19,12 @@ const usersSchema = new Schema(
 
     password: {
       type: String,
-      required: true,
-      unique: true
+      required: true
     },
 
     profile: {
       type: String,
-      required: true,
-      unique: true 
+      required: true
     },
 
     created: {
