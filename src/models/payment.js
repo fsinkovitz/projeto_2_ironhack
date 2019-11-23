@@ -1,40 +1,33 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Users = mongoose.Schema;
-
-const usersSchema = new Schema(
+const paymentSchema = new Schema(
   {
+    cardNumber: {
+      type: String,
+      required: true,
+      unique: true
+    },
+
+    cardExpirationDate: {
+      type: String,
+      required: true,
+      unique: true
+    },
+
+    cardCvv: {
+      type: String,
+      required: true,
+      unique: true
+    },
+
     userName: {
       type: String,
       required: true,
       unique: true
     },
-
-    email: {
-      type: String,
-      required: true,
-      unique: true
-    },
-
-    password: {
-      type: String,
-      required: true,
-      unique: true
-    },
-
-    profile: {
-      type: String,
-      required: true,
-      unique: true 
-    },
-
-    created: {
-      type: Date,
-      default: Date.now
-    }
   }
 );
 
-const User = mongoose.model('User', usersSchema);
-module.exports = User;
+const Payment = mongoose.model('Payment', paymentSchema);
+module.exports = Payment;
