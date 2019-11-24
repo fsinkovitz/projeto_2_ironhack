@@ -1,0 +1,14 @@
+<form action="/signup" method="POST" id="signup-form">
+    <input type="text" name="email" placeholder="johndoe@mail.com.br">
+    <input type="password" name="password" placeholder="password">
+    <input type="password" name="confirm-password" placeholder="confirm-password">
+    <select name="profile">
+      <option value=""></option>
+      <option value="Sales">Sales</option>
+      <option value="Client">Client</option>
+    </select>
+    <input type="submit" value="Sign up">
+    {{#if errorMessage }}
+      <div class="error-message">{{ errorMessage }}</div>
+    {{/if}}
+</form>

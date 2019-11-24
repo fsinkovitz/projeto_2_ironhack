@@ -1,0 +1,14 @@
+<form action="/login" method="POST" id="login-form">
+    <input type="text" name="email" placeholder="johndoe@mail.com.br">
+    <input type="password" name="password" placeholder="********">
+    <input type="submit" value="login">
+    {{#if errorMessage }}
+        <div class="error-message">{{ errorMessage }}</div>
+    {{/if}}
+    <p class="account-message-signup">
+        Don't have an account? <a href="/signup">Sign up</a>
+    </p>
+     <p class="account-message-password">
+        Forget password? <a href="/signup">Send email</a>
+    </p>
+</form>

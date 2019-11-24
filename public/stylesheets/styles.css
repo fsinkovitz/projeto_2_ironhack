@@ -148,6 +148,12 @@ iframe {
 }
 
 
+.information {
+  display: flex;
+  flex-direction: column;
+  color: azure;
+  line-height: 35px;
+}
 
 
 
