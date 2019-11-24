@@ -66,10 +66,6 @@ nav {
   border-color: #222831;
 }
 
-a {
-  text-decoration: none;
-}
-
 p {
   margin-top: 315px;
   margin-left: 35px;
@@ -150,3 +146,69 @@ iframe {
   margin-top: 80px;
   margin-bottom: 35px;
 }
+
+
+.information {
+  display: flex;
+  flex-direction: column;
+  color: azure;
+  line-height: 35px;
+}
+
+
+
+
+
+#form {
+    margin: 30px auto;
+    width: 380px;
+    color: #4D4141;
+    background-color: #4D4141;
+  }
+  
+  #form label {
+    color: #666;
+    display: inline-block;
+    margin-bottom: 10px;
+    text-align: center;
+    width: 100%;
+  }
+  
+  #form input,
+  #form button {
+    box-sizing: border-box;
+    font-size: 14px;
+    outline: 0;
+    padding: 4px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  #form button {
+    background: #43a3e6;
+    border: 1px solid #43a3e6;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    padding: 8px 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: .3s ease background;
+    width: 100%;
+  }
+  
+  #form button:hover {
+    background: #fff;
+    color: #43a3e6;
+    transition: .3s ease background;
+  }
+  .error-message {
+    background: #F02B63;
+    box-sizing: border-box;
+    color: #fff;
+    margin: 20px auto;
+    padding: 20px;
+    width: 100%;
+  } 
