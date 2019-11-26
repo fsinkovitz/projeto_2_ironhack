@@ -1,15 +1,17 @@
 * {
   padding: 0px;
   margin: 0px;
-  border: 2px;
+  border: solid transparent 1px;
 }
 
 nav {
-  background-color: #e5dfdf;
+  background-color: #222831;
   font-family: Arial, Helvetica, sans-serif;
   list-style: none;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  position: fixed;
+  width: 100%;
 }
 
 .nav-items {
@@ -22,13 +24,23 @@ nav {
   margin-left: 40px;
   padding-top: 10px;
   font-size: 30px;
-  color: #222831;
+  color: azure;
 }
 
 .buttons {
   display: flex;
   justify-content: space-around;
   margin-right: 40px;
+}
+
+.signup > a {
+  text-decoration: none;
+  color: #222831;
+}
+
+.login > a {
+  text-decoration: none;
+  color: #222831;
 }
 
 .signup {
@@ -42,7 +54,6 @@ nav {
   padding: 10px;
 }
 
-/* Estilizando o botão ao passar o mouse */
 .signup:hover {
   color: azure; 
   background-color: #5edfff;
@@ -84,6 +95,76 @@ p {
   display: flex;
   flex-direction: row;
   font-style: italic;
+}
+
+.list-books {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-left: 400px;
+  margin-right: 400px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.book-cover {
+  width: 200px;
+  height: 250px;
+  margin: 5px;
+}
+
+.book-cover:hover {
+  width: 200px;
+  height: 250px;
+  opacity: 0.5;
+}
+
+#developers {
+  background-color: #29a19c;
+}
+
+.developers {
+  text-align: center;
+  font-size: 60px;
+  font-style: italic;
+  color: #222831;
+  margin-top: 40px;
+}
+
+.makers {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.cris {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+}
+
+.jef {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+}
+
+.github {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 40px;
+  margin-top: 20px;
+}
+
+.github > span {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-style: italic;
+}
+
+.github > span > a {
+  text-decoration: none;
+  color: #222831;
 }
 
 footer {
@@ -146,7 +227,6 @@ iframe {
   margin-top: 80px;
   margin-bottom: 35px;
 }
-
 
 .information {
   display: flex;
