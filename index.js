@@ -23,7 +23,14 @@ mongoose.connect('mongodb+srv://jesus:F4iC0I35R5snjcIs@cluster0-3dz7l.azure.mong
 
   app.get(['/', '/home'], (request, response) => {
     console.log(request);
-    response.render('index');
+    Book.find()
+      .then(bookFromDB => {
+        console.log('Retrieved books from DB:', bookFromDB);
+        response.render('index', { books: bookFromDB });
+    })
+    .catch(error => {
+      console.log('Error: ', err);
+    })
   });
 
   app.get('/details', (request, response) => {

@@ -5,18 +5,19 @@
       </div>
       <img class="readerbook" src="/images/empty_state.jpg" alt="readerbook">
     </div>
-    <section>
-      <ul>
-        <li>Somebookhere</li>
-        <li>Somebookhere</li>
-        <li>Somebookhere</li>
-        <li>Somebookhere</li>
-        <li>Somebookhere</li>
-        <li>Somebookhere</li>
-        <li>Somebookhere</li>
-        <li>Somebookhere</li>
-      </ul>
-    </section>
-    <section>
-      <div class="developes"><p>Some information here</p></div>
+    <div class='list-books'>
+      {{#each books}}
+        <img class="book-cover" src="{{this.cover}}"></img>
+      {{/each}}  
+    </div>
+    <section id="developers">
+      <div class="developers"><h1>Who makers</h1></div>
+      <div class="makers">
+        <img class='cris' src="/images/cris.png">
+        <img class='jef' src="/images/jef.jpeg">
+      </div>
+      <div class="github">
+        <span><a href="https://github.com/cristianlj">https://github.com/cristianlj</a></span>
+        <span><a href="https://github.com/Jeferson1">https://github.com/Jeferson1</a></span>
+      </div>
     </section>
