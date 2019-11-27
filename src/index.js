@@ -1,4 +1,4 @@
-//require('dotenv').config();
+require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -10,6 +10,10 @@ app.set('views', __dirname + '/Views');
 app.use(express.static(__dirname + '../../public'));
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const hbs = require('hbs');
+const PORT = 3000;
+const axios = require('axios').default;
+const Book = require('../src/models/books');
 
 mongoose.connect('mongodb+srv://jesus:F4iC0I35R5snjcIs@cluster0-3dz7l.azure.mongodb.net/ironbook-users?retryWrites=true&w=majority', { useNewUrlParser: true })
   .then(() => {
@@ -31,36 +35,61 @@ app.use(session({
   }),
 }));
 
-
 app.use('/login', require('./routes/auth-routes'));
 app.use(['/', '/home'], require('./routes/site-routes'));
 
 
-//Route send mail
-router.post('/send-email', (req, res, next) => {
-  let { email, message } = req.body;
-  let subject = 'Assunto do email';
-  res.render('message', { email, subject, message })
-
-  let transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-      user: 'cristianjesushh@gmail.com',
-      pass: 'Bolinha11@'
-    }
-  });
-  transporter.sendMail({
-    from: '"My Awesome Project 👻" <myawesome@project.com>',
-    to: email,
-    subject: subject,
-    text: message,
-    html: `<b>${message}</b>`
-  })
-    .then(info => res.render('message', { email, subject, message, info }))
-    .catch(error => console.log(error));
+router.get(['/', '/home'], (request, response) => {
+ // console.log(request);
+  Book.find()
+    .then(bookFromDB => {
+      console.log('Retrieved books from DB:', bookFromDB);
+      response.render('index', { books: bookFromDB });
+    })
+    .catch(error => {
+      console.log('Error: ', err);
+    })
 });
 
 
+//colcoar Id para trazer dados apenas do livro escolhido
+router.get('/details', (request, response) => {
+  // console.log(request);
+  Book.find()
+    .then(bookFromDB => {
+     // console.log('Retrieved books from DB:', bookFromDB);
+      response.render('details', { books: bookFromDB });
+    })
+    .catch(error => {
+      console.log('Error: ', err);
+    })
+});
+
+router.get('/listbooks', (request, response) => {
+  Book.find()
+    .then(bookFromDB => {
+     // console.log('Retrieved books from DB:', bookFromDB);
+      response.render('listbooks', { books: bookFromDB });
+    })
+    .catch(error => {
+      console.log('Error: ', err);
+    })
+});
+
+router.get('/socialbooks', (request, response) => {
+  console.log(request);
+  response.render('social_books');
+});
+
+router.get('/editbooks', (request, response) => {
+  console.log(request);
+  response.render('edit_add_books');
+});
+
+router.get('/buybooks', (request, response) => {
+  console.log(request);
+  response.render('buy_books');
+});
 
 
 
