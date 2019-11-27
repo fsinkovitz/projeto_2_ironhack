@@ -3,7 +3,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-const router = require('./Routes/auth.js');
+const router = require('./routes/auth.js');
 app.use('/', router);
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/Views');
@@ -30,32 +30,35 @@ app.use(session({
     ttl: 24 * 60 * 60, // 1 day
   }),
 }));
-app.use('/', require('./routes/auth-routes'));
-app.use('/', require('./routes/site-routes'));
 
-// //Route send mail
-// router.post('/send-email', (req, res, next) => {
-//   let { email, message } = req.body;
-//   let subject = 'Assunto do email';
-//   res.render('message', { email, subject, message })
 
-//   let transporter = nodemailer.createTransport({
-//     service: 'Gmail',
-//     auth: {
-//       user: 'cristianjesushh@gmail.com',
-//       pass: 'Bolinha11@'
-//     }
-//   });
-//   transporter.sendMail({
-//     from: '"My Awesome Project 👻" <myawesome@project.com>',
-//     to: email,
-//     subject: subject,
-//     text: message,
-//     html: `<b>${message}</b>`
-//   })
-//     .then(info => res.render('message', { email, subject, message, info }))
-//     .catch(error => console.log(error));
-// });
+app.use('/login', require('./routes/auth-routes'));
+app.use(['/', '/home'], require('./routes/site-routes'));
+
+
+//Route send mail
+router.post('/send-email', (req, res, next) => {
+  let { email, message } = req.body;
+  let subject = 'Assunto do email';
+  res.render('message', { email, subject, message })
+
+  let transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'cristianjesushh@gmail.com',
+      pass: 'Bolinha11@'
+    }
+  });
+  transporter.sendMail({
+    from: '"My Awesome Project 👻" <myawesome@project.com>',
+    to: email,
+    subject: subject,
+    text: message,
+    html: `<b>${message}</b>`
+  })
+    .then(info => res.render('message', { email, subject, message, info }))
+    .catch(error => console.log(error));
+});
 
 
 
