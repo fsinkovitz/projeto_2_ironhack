@@ -97,10 +97,6 @@ router.post('/signup', (req, res, next) => {
     .then(info => res.render('message', { email, subject, message, info }))
     .catch(error => console.log(error));
 
-
-
-
-
 });
 
 

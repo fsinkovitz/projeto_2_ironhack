@@ -35,63 +35,61 @@ app.use(session({
   }),
 }));
 
-app.use('/login', require('./routes/auth-routes'));
-app.use(['/', '/home'], require('./routes/site-routes'));
+// app.use('/login', require('./routes/auth-routes'));
+app.use(['/', '/home'], require('./routes/home'));
 
 
-router.get(['/', '/home'], (request, response) => {
- // console.log(request);
-  Book.find()
-    .then(bookFromDB => {
-      console.log('Retrieved books from DB:', bookFromDB);
-      response.render('index', { books: bookFromDB });
-    })
-    .catch(error => {
-      console.log('Error: ', err);
-    })
-});
+// router.get(['/', '/home'], (request, response) => {
+//  // console.log(request);
+//   Book.find()
+//     .then(bookFromDB => {
+//       console.log('Retrieved books from DB:', bookFromDB);
+//       response.render('index', { books: bookFromDB });
+//     })
+//     .catch(error => {
+//       console.log('Error: ', err);
+//     })
+// });
 
 
-//colcoar Id para trazer dados apenas do livro escolhido
-router.get('/details', (request, response) => {
-  // console.log(request);
-  Book.find()
-    .then(bookFromDB => {
-     // console.log('Retrieved books from DB:', bookFromDB);
-      response.render('details', { books: bookFromDB });
-    })
-    .catch(error => {
-      console.log('Error: ', err);
-    })
-});
+// colcoar Id para trazer dados apenas do livro escolhido
+// router.get('/details', (request, response) => {
+//   // console.log(request);
+//   Book.find()
+//     .then(bookFromDB => {
+//      // console.log('Retrieved books from DB:', bookFromDB);
+//       response.render('details', { books: bookFromDB });
+//     })
+//     .catch(error => {
+//       console.log('Error: ', err);
+//     })
+// });
 
-router.get('/listbooks', (request, response) => {
-  Book.find()
-    .then(bookFromDB => {
-     // console.log('Retrieved books from DB:', bookFromDB);
-      response.render('listbooks', { books: bookFromDB });
-    })
-    .catch(error => {
-      console.log('Error: ', err);
-    })
-});
+// router.get('/listbooks', (request, response) => {
+//   Book.find()
+//     .then(bookFromDB => {
+//      // console.log('Retrieved books from DB:', bookFromDB);
+//       response.render('listbooks', { books: bookFromDB });
+//     })
+//     .catch(error => {
+//       console.log('Error: ', err);
+//     })
+// });
 
-router.get('/socialbooks', (request, response) => {
-  console.log(request);
-  response.render('social_books');
-});
+// router.get('/socialbooks', (request, response) => {
+//   console.log(request);
+//   response.render('social_books');
+// });
 
-router.get('/editbooks', (request, response) => {
-  console.log(request);
-  response.render('edit_add_books');
-});
+// router.get('/editbooks', (request, response) => {
+//   console.log(request);
+//   response.render('edit_add_books');
+// });
 
-router.get('/buybooks', (request, response) => {
-  console.log(request);
-  response.render('buy_books');
-});
-
-
+// router.get('/buybooks', (request, response) => {
+//   console.log(request);
+//   response.render('buy_books');
+// });
 
 app.listen(3000, () => console.log('Listen'));
 

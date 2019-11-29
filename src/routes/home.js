@@ -3,10 +3,6 @@ const express = require('express');
 const router = express.Router();
 const Book = require('../models/books');
 
-// router.get("/", (req, res, next) => {
-//   res.render("home");
-// });
-
 router.get(['/', '/home'], (request, response) => {
   console.log(request);
   Book.find()

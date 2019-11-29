@@ -1,7 +1,7 @@
 * {
   padding: 0px;
   margin: 0px;
-  border: solid transparent 1px;
+  border: solid transparent 2px;
 }
 
 nav {
@@ -27,6 +27,11 @@ nav {
   color: azure;
 }
 
+.title > a {
+  color:  azure;
+  text-decoration: none;
+}
+
 .buttons {
   display: flex;
   justify-content: space-around;
@@ -47,7 +52,7 @@ nav {
   font-weight: 400px;
   text-align: center;
   background-color: #e5dfdf;
-  font-size: 30px;
+  font-size: 20px;
   color: #222831;
   border: solid 2px;
   margin-right: 80px;
@@ -64,7 +69,7 @@ nav {
   font-weight: 400px;
   text-align: center;
   background-color: #e5dfdf;
-  font-size: 30px;
+  font-size: 20px;
   color: #222831;
   border: solid 2px;
   padding-left: 20px;
@@ -235,25 +240,14 @@ iframe {
   line-height: 35px;
 }
 
-
-
-
-
 #form {
     margin: 30px auto;
     width: 380px;
-    color: #4D4141;
-    background-color: #4D4141;
+    color: azure;
+    background-color: #1d4d4f;
+    border-radius: 10px;
+    margin-top: 150px;
   }
-  
-  #form label {
-    color: #666;
-    display: inline-block;
-    margin-bottom: 10px;
-    text-align: center;
-    width: 100%;
-  }
-  
   #form input,
   #form button {
     box-sizing: border-box;
@@ -262,6 +256,24 @@ iframe {
     padding: 4px;
     width: 100%;
     margin-bottom: 20px;
+  }
+  
+  #form > h2{
+    font-family: Arial, Helvetica, sans-serif;
+    color: azure;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  #form > h3 {
+    margin-left: 10%;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  #form > h3 > a {
+    text-decoration: none;
+    color: greenyellow;
+    font-family: Arial, Helvetica, sans-serif;
   }
   
   #form button {
