@@ -1,23 +1,35 @@
-    <div class="about">
-      <div>
-        <p>In IRONBOOKS</br>
-        We Believe books change lives, improve your life with Ironbooks</p>
-      </div>
-      <img class="readerbook" src="/images/empty_state.jpg" alt="readerbook">
+<nav>
+  <div class="nav-items">
+    <div>
+        <h1 class="title"><a href="/home">IRONBOOKS</a></h1>
     </div>
-    <div class='list-books'>
-      {{#each books}}
-        <a href="./details"><img class="book-cover" src="{{this.cover}}"></img></a>
-      {{/each}}  
+    <div>{{ req.session }}</div>
+    <div class="buttons">
+      <button type="button" class="signup"><a href="./signup">Sign up</a></button>
+      <button type="button" class="login"><a href="./login">Login</a></button>
     </div>
-    <section id="developers">
-      <div class="developers"><h1>Who makers</h1></div>
-      <div class="makers">
-        <img class='cris' src="/images/cris.png">
-        <img class='jef' src="/images/jef.jpeg">
-      </div>
-      <div class="github">
-        <span><a href="https://github.com/cristianlj">https://github.com/cristianlj</a></span>
-        <span><a href="https://github.com/Jeferson1">https://github.com/Jeferson1</a></span>
-      </div>
-    </section>
+  </div>
+</nav>
+<div class="about">
+  <div>
+    <p>In IRONBOOKS</br>
+    We Believe books change lives, improve your life with Ironbooks</p>
+  </div>
+  <img class="readerbook" src="/images/empty_state.jpg" alt="readerbook">
+</div>
+<div class='list-books'>
+  {{#each books}}
+    <a href="/signup"><img class="book-cover" src="{{this.cover}}"></img></a>
+  {{/each}}
+</div>
+<section id="developers">
+  <div class="developers"><h1>Who makers</h1></div>
+  <div class="makers">
+    <img class='cris' src="/images/cris.png">
+    <img class='jef' src="/images/jef.jpeg">
+  </div>
+  <div class="github">
+    <span><a href="https://github.com/cristianlj">https://github.com/cristianlj</a></span>
+    <span><a href="https://github.com/Jeferson1">https://github.com/Jeferson1</a></span>
+  </div>
+</section>
