@@ -11,7 +11,6 @@ app.use(express.static(__dirname + '../../public'));
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const hbs = require('hbs');
-const PORT = 3000;
 const axios = require('axios').default;
 const Book = require('../src/models/books');
 
@@ -96,4 +95,4 @@ router.get('/listbooksSell', (request, response) => {
 //   response.render('buy_books');
 // });
 
-app.listen(3000, () => console.log('Listen'));
+app.listen(process.env.PORT, () => console.log('Listen'));
