@@ -38,6 +38,10 @@ app.use(session({
 // app.use('/login', require('./routes/auth-routes'));
 app.use(['/', '/home'], require('./routes/home'));
 
+// router.get('/buybooks', (request, response) => {
+//   console.log(request);
+//   response.render('buy_books');
+// });
 
 // router.get(['/', '/home'], (request, response) => {
 //  // console.log(request);
@@ -92,9 +96,3 @@ router.get('/listbooksSell', (request, response) => {
 // });
 
 app.listen(3000, () => console.log('Listen'));
-
-
-
-
-
-
