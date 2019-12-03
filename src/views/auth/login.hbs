@@ -1,27 +1,22 @@
-<html>
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="../../../stylesheets/styles.css">
-</head>
-<body>
-    <form action="/login" method="POST" id="form">
-        <h2>Login</h2>
+<nav>
+    <div class="nav-items">
+        <div>
+        <h1 class="title"><a href="/home">IRONBOOKS</a></h1>
+        </div>
+        <div>{{ req.session }}</div>
+    </div>
+</nav>
+<form action="/login" method="POST" id="form">
+    <h2>Login</h2>
+    <input type="text" name="username" placeholder="username">
+    <input type="password" name="password" placeholder="********">
+    {{#if errorMessage }}
+    <div class="error-message">{{ errorMessage }}</div>
+    {{/if}}
 
-        <label for="username">Username</label>
-        <input type="text" name="username">
+    <button>Sign in</button>
 
-        <label for="password">Password</label>
-        <input type="password" name="password">
-
-        {{#if errorMessage }}
-        <div class="error-message">{{ errorMessage }}</div>
-        {{/if}}
-
-        <button>Sign in</button>
-
-        <p class="account-message">
-            Don't have an account? <a href="/signup">Sign up</a>
-        </p>
-    </form>
-</body>
-</html>
+    <h3 class="account-message">
+        Don't have an account? <a href="/signup">Sign up</a>
+    </h3>
+</form>
