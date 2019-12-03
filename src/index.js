@@ -11,7 +11,7 @@ app.use(express.static(__dirname + '../../public'));
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
-mongoose.connect('mongodb+srv://jesus:F4iC0I35R5snjcIs@cluster0-3dz7l.azure.mongodb.net/ironbook-users?retryWrites=true&w=majority', { useNewUrlParser: true })
+mongoose.connect('mongodb://heroku_p94lcl9j:4ka96nmi2j57ts545k4a8rp1j5@ds251618.mlab.com:51618/heroku_p94lcl9j', { useNewUrlParser: true })
   .then(() => {
     console.log('Connected to Mongo!');
   })
