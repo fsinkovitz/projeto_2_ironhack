@@ -1,0 +1,33 @@
+<nav>
+  <div class="nav-items">
+    <div>
+        <h1 class="title">IRONBOOKS</h1>
+    </div>
+    <div>{{ req.session }}</div>
+    <div class="buttons">
+    <button type="button" class="logout"><a href="./home">Logout</a></button>
+    <button type="button" class="profile"><a href="./profile">Profile</a></button>
+    </div>
+  </div>
+</nav>
+<div>
+    <div>
+        <img src="book-cover" src="{{this.cover}}">
+    </div>
+    <div>
+        <h2>{{this.title}}</h2>
+        <h3>{{this.price}}</h3>
+        <h4>{{this.description}}</h4>
+        <input type="number" value="1">
+        <h3>Total $ </h3>
+    </div>
+    <div>
+        <form id="form" action="" method="POST">
+            <input type="text" name="cardnumber" placeholder="1234XXXX.XXXX.5678">
+            <input type="text" name="expiredate" placeholder="MMYY">
+            <input type="text" name="cvv" placeholder="CVV">
+            <input type="text" name="name" placeholder="Your name">
+            <button type="button">Pay</button>
+        </form>
+    </div>
+</div>
