@@ -6,7 +6,7 @@ const app = express();
 const router = require('./routes/auth.js');
 app.use('/', router);
 app.set('view engine', 'hbs');
-app.set('views', __dirname + '/Views');
+app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '../../public'));
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -65,16 +65,16 @@ app.use(['/', '/home'], require('./routes/home'));
 //     })
 // });
 
-// router.get('/listbooks', (request, response) => {
-//   Book.find()
-//     .then(bookFromDB => {
-//      // console.log('Retrieved books from DB:', bookFromDB);
-//       response.render('listbooks', { books: bookFromDB });
-//     })
-//     .catch(error => {
-//       console.log('Error: ', err);
-//     })
-// });
+router.get('/listbooksSell', (request, response) => {
+  Book.find()
+    .then(bookFromDB => {
+     // console.log('Retrieved books from DB:', bookFromDB);
+      response.render('listbooksSell', { books: bookFromDB });
+    })
+    .catch(error => {
+      console.log('Error: ', err);
+    })
+});
 
 // router.get('/socialbooks', (request, response) => {
 //   console.log(request);

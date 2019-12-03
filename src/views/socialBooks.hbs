@@ -1,0 +1,26 @@
+<nav>
+  <div class="nav-items">
+    <div>
+        <h1 class="title">IRONBOOKS</h1>
+    </div>
+    <div>{{ req.session }}</div>
+    <div class="buttons">
+    <button type="button" class="logout"><a href="./home">Logout</a></button>
+    <button type="button" class="profile"><a href="./profile">Profile</a></button>
+    </div>
+  </div>
+</nav>
+<div>
+    <div>
+        <img src="book-cover" src="{{this.cover}}">
+    </div>
+    <div>
+        <h2>{{this.title}}</h2>
+        <h3>{{this.price}}</h3>
+        <h4>{{this.description}}</h4>
+    </div>
+    <div>
+        <button type="button"><a href="./payment">Buy</a></button>
+    </div>
+    <textarea name="comments" id="1" cols="30" rows="10" placeholder="Comment here..."></textarea>
+</div>
