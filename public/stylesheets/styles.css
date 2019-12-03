@@ -82,6 +82,76 @@ nav {
   border-color: #222831;
 }
 
+.logout > a {
+  text-decoration: none;
+  color: #222831;
+}
+
+.profile > a {
+  text-decoration: none;
+  color: #222831;
+}
+
+.logout {
+  font-weight: 400px;
+  text-align: center;
+  background-color: #e5dfdf;
+  font-size: 20px;
+  color: #222831;
+  border: solid 2px;
+  margin-right: 80px;
+  padding: 10px;
+}
+
+.logout:hover {
+  color: azure; 
+  background-color: #5edfff;
+  border-color: #222831;
+}
+
+.profile {
+  font-weight: 400px;
+  text-align: center;
+  background-color: #e5dfdf;
+  font-size: 20px;
+  color: #222831;
+  border: solid 2px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.profile:hover {
+  color: azure; 
+  background-color: #5edfff;
+  border-color: #222831;
+}
+
+.addBook > a {
+  text-decoration: none;
+  color: azure;
+}
+
+.addBook {
+  font-weight: 400px;
+  text-align: center;
+  background-color: #222831;;
+  font-size: 30px;
+  color: azure;
+  padding: 50px;
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  margin-top: 120px;
+  margin-left: 66.5% ;
+}
+
+.addBook:hover {
+  color: #222831; 
+  background-color: #5edfff;
+  border-color: #222831;
+}
+
 p {
   margin-top: 315px;
   margin-left: 35px;
@@ -109,6 +179,16 @@ p {
   margin-left: 400px;
   margin-right: 400px;
   margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.list-books-buy-sell {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-left: 400px;
+  margin-right: 400px;
+  margin-top: 100px;
   margin-bottom: 40px;
 }
 

@@ -1,0 +1,17 @@
+<nav>
+  <div class="nav-items">
+    <div>
+        <h1 class="title">IRONBOOKS</h1>
+    </div>
+    <div>{{ req.session }}</div>
+    <div class="buttons">
+    <button type="button" class="logout"><a href="./home">Logout</a></button>
+      <button type="button" class="profile"><a href="./profile">Profile</a></button>
+    </div>
+  </div>
+</nav>
+<div class='list-books-buy-sell'>
+  {{#each books}}
+    <a href="/socialBooks"><img class="book-cover" src="{{this.cover}}"></img></a>
+  {{/each}}
+</div>
