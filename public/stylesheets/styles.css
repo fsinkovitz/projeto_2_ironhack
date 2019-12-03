@@ -1,15 +1,17 @@
 * {
   padding: 0px;
   margin: 0px;
-  border: 2px;
+  border: solid transparent 2px;
 }
 
 nav {
-  background-color: #e5dfdf;
+  background-color: #222831;
   font-family: Arial, Helvetica, sans-serif;
   list-style: none;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  position: fixed;
+  width: 100%;
 }
 
 .nav-items {
@@ -22,7 +24,12 @@ nav {
   margin-left: 40px;
   padding-top: 10px;
   font-size: 30px;
-  color: #222831;
+  color: azure;
+}
+
+.title > a {
+  color:  azure;
+  text-decoration: none;
 }
 
 .buttons {
@@ -31,18 +38,27 @@ nav {
   margin-right: 40px;
 }
 
+.signup > a {
+  text-decoration: none;
+  color: #222831;
+}
+
+.login > a {
+  text-decoration: none;
+  color: #222831;
+}
+
 .signup {
   font-weight: 400px;
   text-align: center;
   background-color: #e5dfdf;
-  font-size: 30px;
+  font-size: 20px;
   color: #222831;
   border: solid 2px;
   margin-right: 80px;
   padding: 10px;
 }
 
-/* Estilizando o botão ao passar o mouse */
 .signup:hover {
   color: azure; 
   background-color: #5edfff;
@@ -53,7 +69,7 @@ nav {
   font-weight: 400px;
   text-align: center;
   background-color: #e5dfdf;
-  font-size: 30px;
+  font-size: 20px;
   color: #222831;
   border: solid 2px;
   padding-left: 20px;
@@ -62,6 +78,76 @@ nav {
 
 .login:hover {
   color: azure; 
+  background-color: #5edfff;
+  border-color: #222831;
+}
+
+.logout > a {
+  text-decoration: none;
+  color: #222831;
+}
+
+.profile > a {
+  text-decoration: none;
+  color: #222831;
+}
+
+.logout {
+  font-weight: 400px;
+  text-align: center;
+  background-color: #e5dfdf;
+  font-size: 20px;
+  color: #222831;
+  border: solid 2px;
+  margin-right: 80px;
+  padding: 10px;
+}
+
+.logout:hover {
+  color: azure; 
+  background-color: #5edfff;
+  border-color: #222831;
+}
+
+.profile {
+  font-weight: 400px;
+  text-align: center;
+  background-color: #e5dfdf;
+  font-size: 20px;
+  color: #222831;
+  border: solid 2px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.profile:hover {
+  color: azure; 
+  background-color: #5edfff;
+  border-color: #222831;
+}
+
+.addBook > a {
+  text-decoration: none;
+  color: azure;
+}
+
+.addBook {
+  font-weight: 400px;
+  text-align: center;
+  background-color: #222831;;
+  font-size: 30px;
+  color: azure;
+  padding: 50px;
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  margin-top: 120px;
+  margin-left: 66.5% ;
+}
+
+.addBook:hover {
+  color: #222831; 
   background-color: #5edfff;
   border-color: #222831;
 }
@@ -84,6 +170,86 @@ p {
   display: flex;
   flex-direction: row;
   font-style: italic;
+}
+
+.list-books {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-left: 400px;
+  margin-right: 400px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.list-books-buy-sell {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-left: 400px;
+  margin-right: 400px;
+  margin-top: 100px;
+  margin-bottom: 40px;
+}
+
+.book-cover {
+  width: 200px;
+  height: 250px;
+  margin: 5px;
+}
+
+.book-cover:hover {
+  width: 200px;
+  height: 250px;
+  opacity: 0.5;
+}
+
+#developers {
+  background-color: #29a19c;
+}
+
+.developers {
+  text-align: center;
+  font-size: 60px;
+  font-style: italic;
+  color: #222831;
+  margin-top: 40px;
+}
+
+.makers {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.cris {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+}
+
+.jef {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+}
+
+.github {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 40px;
+  margin-top: 20px;
+}
+
+.github > span {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-style: italic;
+}
+
+.github > span > a {
+  text-decoration: none;
+  color: #222831;
 }
 
 footer {
@@ -147,7 +313,6 @@ iframe {
   margin-bottom: 35px;
 }
 
-
 .information {
   display: flex;
   flex-direction: column;
@@ -155,25 +320,14 @@ iframe {
   line-height: 35px;
 }
 
-
-
-
-
 #form {
     margin: 30px auto;
     width: 380px;
-    color: #4D4141;
-    background-color: #4D4141;
+    color: azure;
+    background-color: #1d4d4f;
+    border-radius: 10px;
+    margin-top: 150px;
   }
-  
-  #form label {
-    color: #666;
-    display: inline-block;
-    margin-bottom: 10px;
-    text-align: center;
-    width: 100%;
-  }
-  
   #form input,
   #form button {
     box-sizing: border-box;
@@ -182,6 +336,24 @@ iframe {
     padding: 4px;
     width: 100%;
     margin-bottom: 20px;
+  }
+  
+  #form > h2{
+    font-family: Arial, Helvetica, sans-serif;
+    color: azure;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  #form > h3 {
+    margin-left: 10%;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  #form > h3 > a {
+    text-decoration: none;
+    color: greenyellow;
+    font-family: Arial, Helvetica, sans-serif;
   }
   
   #form button {
@@ -211,4 +383,4 @@ iframe {
     margin: 20px auto;
     padding: 20px;
     width: 100%;
-  } 
+  }

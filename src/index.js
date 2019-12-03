@@ -1,17 +1,21 @@
-//require('dotenv').config();
+require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-const router = require('./Routes/auth.js');
+const router = require('./routes/auth.js');
 app.use('/', router);
 app.set('view engine', 'hbs');
-app.set('views', __dirname + '/Views');
+app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '../../public'));
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const hbs = require('hbs');
+const PORT = 3000;
+const axios = require('axios').default;
+const Book = require('../src/models/books');
 
-mongoose.connect('mongodb://heroku_p94lcl9j:4ka96nmi2j57ts545k4a8rp1j5@ds251618.mlab.com:51618/heroku_p94lcl9j', { useNewUrlParser: true })
+mongoose.connect('mongodb+srv://jesus:F4iC0I35R5snjcIs@cluster0-3dz7l.azure.mongodb.net/ironbook-users?retryWrites=true&w=majority', { useNewUrlParser: true })
   .then(() => {
     console.log('Connected to Mongo!');
   })
@@ -30,41 +34,61 @@ app.use(session({
     ttl: 24 * 60 * 60, // 1 day
   }),
 }));
-app.use('/', require('./routes/auth-routes'));
-app.use('/', require('./routes/site-routes'));
 
-// //Route send mail
-// router.post('/send-email', (req, res, next) => {
-//   let { email, message } = req.body;
-//   let subject = 'Assunto do email';
-//   res.render('message', { email, subject, message })
+// app.use('/login', require('./routes/auth-routes'));
+app.use(['/', '/home'], require('./routes/home'));
 
-//   let transporter = nodemailer.createTransport({
-//     service: 'Gmail',
-//     auth: {
-//       user: 'cristianjesushh@gmail.com',
-//       pass: 'Bolinha11@'
-//     }
-//   });
-//   transporter.sendMail({
-//     from: '"My Awesome Project 👻" <myawesome@project.com>',
-//     to: email,
-//     subject: subject,
-//     text: message,
-//     html: `<b>${message}</b>`
-//   })
-//     .then(info => res.render('message', { email, subject, message, info }))
-//     .catch(error => console.log(error));
+
+// router.get(['/', '/home'], (request, response) => {
+//  // console.log(request);
+//   Book.find()
+//     .then(bookFromDB => {
+//       console.log('Retrieved books from DB:', bookFromDB);
+//       response.render('index', { books: bookFromDB });
+//     })
+//     .catch(error => {
+//       console.log('Error: ', err);
+//     })
 // });
 
 
+// colcoar Id para trazer dados apenas do livro escolhido
+// router.get('/details', (request, response) => {
+//   // console.log(request);
+//   Book.find()
+//     .then(bookFromDB => {
+//      // console.log('Retrieved books from DB:', bookFromDB);
+//       response.render('details', { books: bookFromDB });
+//     })
+//     .catch(error => {
+//       console.log('Error: ', err);
+//     })
+// });
 
+router.get('/listbooksSell', (request, response) => {
+  Book.find()
+    .then(bookFromDB => {
+     // console.log('Retrieved books from DB:', bookFromDB);
+      response.render('listbooksSell', { books: bookFromDB });
+    })
+    .catch(error => {
+      console.log('Error: ', err);
+    })
+});
 
+// router.get('/socialbooks', (request, response) => {
+//   console.log(request);
+//   response.render('social_books');
+// });
+
+// router.get('/editbooks', (request, response) => {
+//   console.log(request);
+//   response.render('edit_add_books');
+// });
+
+// router.get('/buybooks', (request, response) => {
+//   console.log(request);
+//   response.render('buy_books');
+// });
 
 app.listen(3000, () => console.log('Listen'));
-
-
-
-
-
-

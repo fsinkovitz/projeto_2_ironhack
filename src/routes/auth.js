@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../Models/user.js');
+const User = require('../models/user.js');
 const bodyParser = require('body-parser');
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -75,7 +75,7 @@ router.post('/signup', (req, res, next) => {
       console.log(console.log('An error happened: ', error));
     });
 
-    
+
   //send mail
   let subject = 'Assunto do email';
   res.render('message', { email, subject, message })
@@ -83,12 +83,12 @@ router.post('/signup', (req, res, next) => {
   let transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-      user: 'cristianjesushh@gmail.com',
-      pass: 'Bolinha11@'
+      user: 'ironbooksproject@gmail.com',
+      pass: 'Ironbooks19@'
     }
   });
   transporter.sendMail({
-    from: '"My Awesome Project 👻" <myawesome@project.com>',
+    from: '"Iron Books Project 👻" <ironbooksproject@gmail.com>',
     to: email,
     subject: subject,
     text: message,
@@ -96,10 +96,6 @@ router.post('/signup', (req, res, next) => {
   })
     .then(info => res.render('message', { email, subject, message, info }))
     .catch(error => console.log(error));
-
-
-
-
 
 });
 
@@ -116,7 +112,7 @@ router.post('/login', (req, res, next) => {
     return;
   }
 
-  User.findOne({ 'username': theUsername })
+  User.findOne({ 'userName': theUsername })
     .then(user => {
       if (!user) {
         res.render('auth/login', {
@@ -125,9 +121,9 @@ router.post('/login', (req, res, next) => {
         return;
       }
       if (bcrypt.compareSync(thePassword, user.password)) {
-        // Save the login in the session!
+        // Save the login in the session! 
         req.session = user;
-        res.redirect('/');
+        res.redirect('/listbooksSell');
       } else {
         res.render('auth/login', {
           errorMessage: 'Incorrect password',
