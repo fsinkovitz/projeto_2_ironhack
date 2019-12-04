@@ -8,7 +8,6 @@ const bcrypt = require('bcryptjs');
 const bcryptSalt = 10;
 const nodemailer = require('nodemailer');
 
-
 router.get('/signup', (req, res, next) => {
   res.render('auth/signup');
 });
@@ -16,7 +15,6 @@ router.get('/signup', (req, res, next) => {
 router.get('/login', (req, res, next) => {
   res.render('auth/login');
 });
-
 
 //Signup
 router.post('/signup', (req, res, next) => {
@@ -41,7 +39,6 @@ router.post('/signup', (req, res, next) => {
     return;
   }
 
-
   User.findOne({ 'username': username, 'email': email })
     .then(user => {
       if (user !== null) {
@@ -64,7 +61,6 @@ router.post('/signup', (req, res, next) => {
   const salt = bcrypt.genSaltSync(bcryptSalt);
   const hashPass = bcrypt.hashSync(password, salt);
 
-
   User.create({ userName: username, email, password: hashPass, profile })
     .then((newUser) => {
       console.log(newUser);
@@ -74,7 +70,6 @@ router.post('/signup', (req, res, next) => {
     .catch(error => {
       console.log(console.log('An error happened: ', error));
     });
-
 
   //send mail
   let subject = 'Assunto do email';
@@ -96,9 +91,7 @@ router.post('/signup', (req, res, next) => {
   })
     .then(info => res.render('message', { email, subject, message, info }))
     .catch(error => console.log(error));
-
 });
-
 
 //Login
 router.post('/login', (req, res, next) => {
