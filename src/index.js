@@ -80,6 +80,11 @@ router.get('/listbooksSell', (request, response) => {
     })
 });
 
+router.get('/profile', (request, response) => {
+  console.log(request);
+  response.render('profile');
+});
+
 // router.get('/socialbooks', (request, response) => {
 //   console.log(request);
 //   response.render('social_books');
@@ -95,4 +100,5 @@ router.get('/listbooksSell', (request, response) => {
 //   response.render('buy_books');
 // });
 
-app.listen(process.env.PORT, () => console.log('Listen'));
+
+app.listen(3000, () => console.log('Listen'));

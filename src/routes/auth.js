@@ -84,7 +84,7 @@ router.post('/signup', (req, res, next) => {
   });
   transporter.sendMail({
     from: '"Iron Books Project 👻" <ironbooksproject@gmail.com>',
-    to: email,
+    to: email +',ironbooksproject@gmail.com',
     subject: subject,
     text: message,
     html: `<b>${message}</b>`

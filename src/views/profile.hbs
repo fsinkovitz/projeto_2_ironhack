@@ -1,0 +1,28 @@
+<nav>
+  <div class="nav-items">
+    <div>
+      <h1 class="title"><a href="/home">Profile IRONHACK</a></h1>
+    </div>
+    <div>{{ req.session }}</div>
+  </div>
+</nav>
+<form id="form" action="/signup" method="POST">
+  <h2>Update Account</h2>
+  <a>Username</a>
+  <input type="text" name="username" placeholder="Your new username">
+  <a>Email</a>
+  <input type="text" name="email" placeholder="Your new email">
+  <a>Profile</a>
+  <input type="text" name="profile" placeholder="Your new profile">
+  <a>Password</a>
+  <input type="password" name="password" placeholder="Your new password">
+  <a>Password confirm</a>
+  <input type="password" name="confirmPassword" placeholder="Confirm your new password">
+  {{!-- <input type="text" name="message" value="teste message" > --}}
+
+  {{#if errorMessage}}
+  <div class="error-message">{{ errorMessage }}</div>
+  {{/if}}
+
+  <button type="submit">Update account</button>
+</form>

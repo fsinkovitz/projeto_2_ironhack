@@ -16,7 +16,7 @@ nav {
 
 .nav-items {
   display: flex;
-  float: row;
+  float:  row;
   justify-content: space-between;
 }
 
@@ -27,8 +27,8 @@ nav {
   color: azure;
 }
 
-.title>a {
-  color: azure;
+.title > a {
+  color:  azure;
   text-decoration: none;
 }
 
@@ -38,12 +38,12 @@ nav {
   margin-right: 40px;
 }
 
-.signup>a {
+.signup > a {
   text-decoration: none;
   color: #222831;
 }
 
-.login>a {
+.login > a {
   text-decoration: none;
   color: #222831;
 }
@@ -60,7 +60,7 @@ nav {
 }
 
 .signup:hover {
-  color: azure;
+  color: azure; 
   background-color: #5edfff;
   border-color: #222831;
 }
@@ -77,17 +77,17 @@ nav {
 }
 
 .login:hover {
-  color: azure;
+  color: azure; 
   background-color: #5edfff;
   border-color: #222831;
 }
 
-.logout>a {
+.logout > a {
   text-decoration: none;
   color: #222831;
 }
 
-.profile>a {
+.profile > a {
   text-decoration: none;
   color: #222831;
 }
@@ -104,7 +104,7 @@ nav {
 }
 
 .logout:hover {
-  color: azure;
+  color: azure; 
   background-color: #5edfff;
   border-color: #222831;
 }
@@ -121,12 +121,12 @@ nav {
 }
 
 .profile:hover {
-  color: azure;
+  color: azure; 
   background-color: #5edfff;
   border-color: #222831;
 }
 
-.addBook>a {
+.addBook > a {
   text-decoration: none;
   color: azure;
 }
@@ -134,8 +134,7 @@ nav {
 .addBook {
   font-weight: 400px;
   text-align: center;
-  background-color: #222831;
-  ;
+  background-color: #222831;;
   font-size: 30px;
   color: azure;
   padding: 50px;
@@ -144,11 +143,11 @@ nav {
   padding-bottom: 20px;
   padding-top: 20px;
   margin-top: 120px;
-  margin-left: 66.5%;
+  margin-left: 66.5% ;
 }
 
 .addBook:hover {
-  color: #222831;
+  color: #222831; 
   background-color: #5edfff;
   border-color: #222831;
 }
@@ -242,13 +241,13 @@ p {
   margin-top: 20px;
 }
 
-.github>span {
+.github > span {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-style: italic;
 }
 
-.github>span>a {
+.github > span > a {
   text-decoration: none;
   color: #222831;
 }
@@ -274,10 +273,10 @@ footer {
 }
 
 .address {
-  font-size: 20px;
-  font-style: normal;
-  font-family: Arial, Helvetica, sans-serif;
-  text-align: center;
+ font-size: 20px;
+ font-style: normal;
+ font-family: Arial, Helvetica, sans-serif;
+ text-align: center;
 }
 
 h5 {
@@ -297,11 +296,12 @@ iframe {
   text-align: center;
 }
 
-.follow>ul>li {
+.follow > ul > li {
   list-style: none;
 }
 
-.follow>ul>li>a {
+.follow > ul > li > a {
+  
   font-size: 20px;
   color: azure;
   font-family: Arial, Helvetica, sans-serif;
@@ -321,67 +321,70 @@ iframe {
 }
 
 #form {
-  margin: 30px auto;
-  width: 380px;
-  color: azure;
-  background-color: #1d4d4f;
-  border-radius: 10px;
-  margin-top: 150px;
-}
+    margin: 30px auto;
+    width: 380px;
+    color: azure;
+    background-color: #1d4d4f;
+    border-radius: 10px;
+    margin-top: 150px;
+  }
+  #form input,
+  #form button {
+    box-sizing: border-box;
+    font-size: 14px;
+    outline: 0;
+    padding: 4px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  #form > h2{
+    font-family: Arial, Helvetica, sans-serif;
+    color: azure;
+    text-align: center;
+    margin-bottom: 25px;
+  }
 
-#form input, #form button {
-  box-sizing: border-box;
-  font-size: 14px;
-  outline: 0;
-  padding: 4px;
-  width: 100%;
-  margin-bottom: 20px;
-}
+  #form > h3 {
+    margin-left: 10%;
+    font-family: Arial, Helvetica, sans-serif;
+  }
 
-#form>h2 {
-  font-family: Arial, Helvetica, sans-serif;
-  color: azure;
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-#form>h3 {
-  margin-left: 10%;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-#form>h3>a {
-  text-decoration: none;
-  color: greenyellow;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-#form button {
-  background: #43a3e6;
-  border: 1px solid #43a3e6;
-  border-radius: 4px;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 14px;
-  padding: 8px 16px;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: .3s ease background;
-  width: 100%;
-}
-
-#form button:hover {
-  background: #fff;
-  color: #43a3e6;
-  transition: .3s ease background;
-}
-
-.error-message {
-  background: #F02B63;
-  box-sizing: border-box;
-  color: #fff;
-  margin: 20px auto;
-  padding: 20px;
-  width: 100%;
-}
+  #form > h3 > a {
+    text-decoration: none;
+    color: greenyellow;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  #form button {
+    background: #43a3e6;
+    border: 1px solid #43a3e6;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    padding: 8px 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: .3s ease background;
+    width: 100%;
+  }
+  
+  #form button:hover {
+    background: #fff;
+    color: #43a3e6;
+    transition: .3s ease background;
+  }
+  .error-message {
+    background: #F02B63;
+    box-sizing: border-box;
+    color: #fff;
+    margin: 20px auto;
+    padding: 20px;
+    width: 100%;
+<<<<<<< HEAD
+  }
+=======
+  }
+>>>>>>> 765f79f72a64f5f8db282534b8c1f25b4535e8a3
