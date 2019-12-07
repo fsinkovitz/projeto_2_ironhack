@@ -1,23 +1,33 @@
 <nav>
-    <div class="nav-items">
-      <div>
-        <h1 class="title"><a href="/home">IRONBOOKS</a></h1>
-      </div>
-      <div>{{ req.session }}</div>
+  <div class="nav-items">
+    <div>
+      <h1 class="title"><a href="/home">IRONBOOKS</a></h1>
     </div>
+    <div>{{ req.session }}</div>
+  </div>
 </nav>
 <form id="form" action="/signup" method="POST">
-    <h2>Sign up</h2>
-    <input type="text" name="username" placeholder="Your username">
-    <input type="text" name="email" placeholder="Your email">
-    <input type="text" name="profile" placeholder="Your profile">
-    <input type="password" name="password" placeholder="********">
-    <input type="password" name="confirmPassword" placeholder="********">
-    <input type="text" name="message" value="teste message" >
+  <h2>Sign up</h2>
+  <a>Username</a>
+  <input type="text" name="username" placeholder="Your username">
+  <a>Email</a>
+  <input type="text" name="email" placeholder="Your email">
+  <a>Profile</a>
+  <div>
+    <select class="profileSelect" name="profile">
+      <option value="1" selected>Buy</option>
+      <option value="2">Sale</option>
+    </select>
+  </div>
+  <a>Password</a>
+  <input type="password" name="password" placeholder="Your password">
+  <a>Password confirm</a>
+  <input type="password" name="confirmPassword" placeholder="Confirm your password">
 
-    {{#if errorMessage}}
-    <div class="error-message">{{ errorMessage }}</div>
-    {{/if}}
 
-    <button type="submit">Create account</button>
+  {{#if errorMessage}}
+  <div class="error-message">{{ errorMessage }}</div>
+  {{/if}}
+
+  <button type="submit">Create account</button>
 </form>

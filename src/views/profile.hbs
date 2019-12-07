@@ -1,9 +1,13 @@
 <nav>
   <div class="nav-items">
     <div>
-      <h1 class="title"><a href="/home">Profile IRONHACK</a></h1>
+      <h1 class="title">IRONBOOKS</h1>
     </div>
-    <div>{{ req.session }}</div>
+    <div class="buttons">
+      <div class="userLogged">{{ user.userName }}</div>
+      <button type="button" class="logout"><a href="./home">Logout</a></button>
+      <button type="button" class="profile"><a href="./profile">Profile</a></button>
+    </div>
   </div>
 </nav>
 <form id="form" action="/signup" method="POST">

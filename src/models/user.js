@@ -26,7 +26,10 @@ const usersSchema = new Schema(
       type: String,
       required: true
     },
-
+    verify: {
+      type: Boolean,
+      default: false
+    },
     created: {
       type: Date,
       default: Date.now

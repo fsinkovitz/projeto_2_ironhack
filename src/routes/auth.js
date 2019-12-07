@@ -23,10 +23,9 @@ router.post('/signup', (req, res, next) => {
   const confirmPassword = req.body.confirmPassword;
   const email = req.body.email;
   const profile = req.body.profile;
-  const message = req.body.message;
+  //const message = req.body.message;
 
-
-  if (username === '' || password === '' || profile === '') {
+  if (username === '' || password === '' || email === "") {
     res.render('auth/signup', {
       errorMessage: 'Indicate a user name, email, profile and a password to sign up',
     });
@@ -39,15 +38,15 @@ router.post('/signup', (req, res, next) => {
     return;
   }
 
-  User.findOne({ 'username': username, 'email': email })
+  User.findOne({ 'userName': username, 'email': email })
     .then(user => {
-      if (user !== null) {
+      if (user.userName !== null) {
         res.render('auth/signup', {
           errorMessage: 'The username already exists!',
         });
         return;
       }
-      else if (email !== null) {
+      else if (user.email !== null) {
         res.render('auth/signup', {
           errorMessage: 'The email already exists in other account!',
         });
@@ -63,8 +62,6 @@ router.post('/signup', (req, res, next) => {
 
   User.create({ userName: username, email, password: hashPass, profile })
     .then((newUser) => {
-      console.log(newUser);
-      console.log('User created. ' + newUser.username + ' pass: ' + newUser.hashPass);
       res.redirect('/');
     })
     .catch(error => {
@@ -72,8 +69,10 @@ router.post('/signup', (req, res, next) => {
     });
 
   //send mail
-  let subject = 'Assunto do email';
-  res.render('message', { email, subject, message })
+  let subject = 'Iron Books registration confirmation';
+  let message = `Please confirm your registration by clicking this link
+  XXXXXXXXXXXXXXXXXSSSSSSSSSZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ`;
+  res.render('message', { email })
 
   let transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -84,9 +83,9 @@ router.post('/signup', (req, res, next) => {
   });
   transporter.sendMail({
     from: '"Iron Books Project 👻" <ironbooksproject@gmail.com>',
-    to: email +',ironbooksproject@gmail.com',
+    to: email + ',ironbooksproject@gmail.com',
     subject: subject,
-    text: message,
+    text: '',
     html: `<b>${message}</b>`
   })
     .then(info => res.render('message', { email, subject, message, info }))
@@ -115,8 +114,15 @@ router.post('/login', (req, res, next) => {
       }
       if (bcrypt.compareSync(thePassword, user.password)) {
         // Save the login in the session! 
-        req.session = user;
-        res.redirect('/listbooksSell');
+        req.session.user = user;
+
+        if (user.profile === '1') {
+          res.redirect('/listbooksSell');
+        }
+        else {
+          res.redirect('/listbooksBuy');
+        }
+
       } else {
         res.render('auth/login', {
           errorMessage: 'Incorrect password',

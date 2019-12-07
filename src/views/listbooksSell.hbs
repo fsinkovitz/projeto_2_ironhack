@@ -1,10 +1,10 @@
 <nav>
   <div class="nav-items">
     <div>
-        <h1 class="title">IRONBOOKS</h1>
+      <h1 class="title">IRONBOOKS</h1>
     </div>
-    <div>{{ req.session }}</div>
     <div class="buttons">
+      <div class="userLogged">{{ user.userName }}</div>
       <button type="button" class="logout"><a href="./home">Logout</a></button>
       <button type="button" class="profile"><a href="./profile">Profile</a></button>
     </div>
@@ -15,6 +15,6 @@
 </div>
 <div class='list-books-buy-sell'>
   {{#each books}}
-    <a href="/editBooks"><img class="book-cover" src="{{this.cover}}"></img></a>
+  <a href="/editBooks"><img class="book-cover" src="{{this.cover}}"></img></a>
   {{/each}}
 </div>

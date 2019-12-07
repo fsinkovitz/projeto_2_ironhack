@@ -1,19 +1,12 @@
 <nav>
     <div class="nav-items">
         <div>
-            <h1 class="title"><a href="/home">Profile IRONHACK</a></h1>
+            <h1 class="title"><a href="/home">IRONHACK</a></h1>
         </div>
-        <div>{{ req.session }}</div>
     </div>
 </nav>
 
-<h1>Email sent</h1>
-
-<h2>Email</h2>
-{{email}}
-
-<h2>Subject</h2>
-{{subject}}
-
-<h2>Message</h2>
-{{message}}
+<p class="parTitle">Almost there …</p>
+<p class="par">Please check your email ({{ email }}) to confirm your account.</p>
+<p class="par">If ({{ email }}) is not your email address, please go back and enter the correct one.</p>
+<p class="par">If you haven't received our email in 15 minutes, please check your spam folder.</p>

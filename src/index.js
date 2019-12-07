@@ -4,7 +4,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const router = require('./routes/auth.js');
-app.use('/', router);
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '../../public'));
@@ -14,8 +13,8 @@ const hbs = require('hbs');
 const axios = require('axios').default;
 const Book = require('../src/models/books');
 
-//mongoose.connect('mongodb+srv://jesus:F4iC0I35R5snjcIs@cluster0-3dz7l.azure.mongodb.net/ironbook-users?retryWrites=true&w=majority', { useNewUrlParser: true })
-  mongoose.connect('mongodb://heroku_b6z2mw6l:1djmt1m9tm8sm1kr2hvabeco79@ds351628.mlab.com:51628/heroku_b6z2mw6l', { useNewUrlParser: true })
+mongoose.connect('mongodb+srv://jesus:F4iC0I35R5snjcIs@cluster0-3dz7l.azure.mongodb.net/ironbook-users?retryWrites=true&w=majority', { useNewUrlParser: true })
+  //  mongoose.connect('mongodb://heroku_b6z2mw6l:1djmt1m9tm8sm1kr2hvabeco79@ds351628.mlab.com:51628/heroku_b6z2mw6l', { useNewUrlParser: true })
   .then(() => {
     console.log('Connected to Mongo!');
   })
@@ -35,8 +34,24 @@ app.use(session({
   }),
 }));
 
+app.use(router);
+
 // app.use('/login', require('./routes/auth-routes'));
 app.use(['/', '/home'], require('./routes/home'));
+
+app.get('/listbooksSell', (request, response) => {
+  const { user } = request.session;
+  console.log(request.session);
+  Book.find()
+    .then(bookFromDB => {
+      // console.log('Retrieved books from DB:', bookFromDB);
+      response.render('listbooksSell', { books: bookFromDB, user });
+    })
+    .catch(error => {
+      console.log('Error: ', err);
+    })
+});
+
 
 // router.get('/buybooks', (request, response) => {
 //   console.log(request);
@@ -69,36 +84,37 @@ app.use(['/', '/home'], require('./routes/home'));
 //     })
 // });
 
-router.get('/listbooksSell', (request, response) => {
-  Book.find()
-    .then(bookFromDB => {
-     // console.log('Retrieved books from DB:', bookFromDB);
-      response.render('listbooksSell', { books: bookFromDB });
-    })
-    .catch(error => {
-      console.log('Error: ', err);
-    })
+
+app.get('/addBooks', (request, response) => {
+  const { user } = request.session;
+  response.render('addBooks', { user });
 });
 
-router.get('/profile', (request, response) => {
-  console.log(request);
-  response.render('profile');
+app.get('/profile', (request, response) => {
+  const { user } = request.session;
+  //console.log(request);
+  response.render('profile', { user });
 });
 
-// router.get('/socialbooks', (request, response) => {
-//   console.log(request);
-//   response.render('social_books');
-// });
 
-// router.get('/editbooks', (request, response) => {
-//   console.log(request);
-//   response.render('edit_add_books');
-// });
 
-// router.get('/buybooks', (request, response) => {
-//   console.log(request);
-//   response.render('buy_books');
-// });
+app.get('/socialbooks', (request, response) => {
+  const { user } = request.session;
+  // console.log(request);
+  response.render('social_books', { user });
+});
+
+app.get('/editbooks', (request, response) => {
+  const { user } = request.session;
+  // console.log(request);
+  response.render('edit_add_books', { user });
+});
+
+app.get('/listbooksBuy', (request, response) => {
+  const { user } = request.session;
+  // console.log(request);
+  response.render('listbooksBuy', { user });
+});
 
 
 app.listen(3000, () => console.log('Listen'));
