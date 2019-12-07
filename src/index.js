@@ -4,7 +4,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const router = require('./routes/auth.js');
+const addBooks = require('./routes/addBooks.js')
 app.use('/', router);
+app.use('/', addBooks);
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '../../public'));
@@ -13,6 +15,7 @@ const MongoStore = require('connect-mongo')(session);
 const hbs = require('hbs');
 const axios = require('axios').default;
 const Book = require('../src/models/books');
+const PORT = 3000;
 
 mongoose.connect('mongodb+srv://jesus:F4iC0I35R5snjcIs@cluster0-3dz7l.azure.mongodb.net/ironbook-users?retryWrites=true&w=majority', { useNewUrlParser: true })
   //mongoose.connect('mongodb://heroku_b6z2mw6l:1djmt1m9tm8sm1kr2hvabeco79@ds351628.mlab.com:51628/heroku_b6z2mw6l', { useNewUrlParser: true })
@@ -35,8 +38,9 @@ app.use(session({
   }),
 }));
 
-// app.use('/login', require('./routes/auth-routes'));
 app.use(['/', '/home'], require('./routes/home'));
+
+app.use('addBooks', require('./routes/addBooks'));
 
 // router.get('/buybooks', (request, response) => {
 //   console.log(request);
@@ -95,4 +99,5 @@ router.get('/listbooksSell', (request, response) => {
 //   response.render('buy_books');
 // });
 
-app.listen(process.env.PORT, () => console.log('Listen'));
+//app.listen(process.env.PORT, () => console.log('Listen'));
+app.listen(3000, () => console.log('Listen'));
