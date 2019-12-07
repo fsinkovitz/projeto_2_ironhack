@@ -27,17 +27,14 @@ const booksSchema = new Schema(
 
     value: {
       type: Number,
-      required: true
     },
 
     cover: {
       type: String,
-      required: true
     },
 
     qunatity: {
       type: Number,
-      required: true
     },
 
     comments: {
