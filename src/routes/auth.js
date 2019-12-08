@@ -8,13 +8,14 @@ const bcrypt = require('bcryptjs');
 const bcryptSalt = 10;
 const nodemailer = require('nodemailer');
 
+router.get('/login', (req, res, next) => {
+  res.render('auth/login');
+});
+
 router.get('/signup', (req, res, next) => {
   res.render('auth/signup');
 });
 
-router.get('/login', (req, res, next) => {
-  res.render('auth/login');
-});
 
 //Signup
 router.post('/signup', (req, res, next) => {

@@ -10,14 +10,19 @@
     </div>
   </div>
 </nav>
-<form id="form" action="/signup" method="POST">
+<form id="form" action="/updateAccount" method="POST">
   <h2>Update Account</h2>
   <a>Username</a>
-  <input type="text" name="username" placeholder="Your new username">
+  <input type="text" name="username" value={{ user.userName }}>
   <a>Email</a>
-  <input type="text" name="email" placeholder="Your new email">
+  <input type="text" name="email" value={{ user.email }}>
   <a>Profile</a>
-  <input type="text" name="profile" placeholder="Your new profile">
+  <div>
+    <select class="profileSelect" name="profile">
+      <option value="1" selected>Buy</option>
+      <option value="2">Sale</option>
+    </select>
+  </div>
   <a>Password</a>
   <input type="password" name="password" placeholder="Your new password">
   <a>Password confirm</a>
