@@ -5,7 +5,7 @@ const booksSchema = new Schema(
   {
     title: {
       type: String,
-     // required: true
+      // required: true
     },
 
     gender: {
@@ -30,6 +30,9 @@ const booksSchema = new Schema(
     },
 
     publishCompany: {
+      type: String
+    },
+    vendorId: {
       type: String
     }
   }

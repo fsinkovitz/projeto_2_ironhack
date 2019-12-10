@@ -4,7 +4,7 @@
       <h1 class="title">IRONBOOKS</h1>
     </div>
     <div class="buttons">
-      <div class="userLogged">{{ user.userName }}</div>
+      <div class="userLogged">Welcome vendor  {{ user.userName }}</div>
       <button type="button" class="logout"><a href="./home">Logout</a></button>
       <button type="button" class="profile"><a href="./profile">Profile</a></button>
     </div>
@@ -12,6 +12,7 @@
 </nav>
 <div>
   <button type="button" class="addBook"><a href="./addBooks">+ Books</a></button>
+  <button type="button" class="addBook"><a href="./addBooks">+ Books All</a></button>
 </div>
 <div class='list-books-buy-sell'>
   {{#each books}}

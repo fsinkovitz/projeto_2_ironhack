@@ -13,13 +13,13 @@
 <form id="form" action="/updateAccount" method="POST">
   <h2>Update Account</h2>
   <a>Username</a>
-  <input type="text" name="username" value={{ user.userName }}>
+  <input type="text" name="username" value='{{ user.userName }}'>
   <a>Email</a>
-  <input type="text" name="email" value={{ user.email }}>
+  <input type="text" name="email" value='{{ user.email }}'>
   <a>Profile</a>
   <div>
-    <select class="profileSelect" name="profile">
-      <option value="1" selected>Buy</option>
+    <select class="profileSelect" name="profile" >
+      <option value="1">Buy</option>
       <option value="2">Sale</option>
     </select>
   </div>

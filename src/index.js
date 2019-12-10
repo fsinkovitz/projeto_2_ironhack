@@ -13,6 +13,9 @@ const hbs = require('hbs');
 const axios = require('axios').default;
 const Book = require('../src/models/books');
 const User = require('./models/user');
+const bcrypt = require('bcryptjs');
+const bcryptSalt = 10;
+const data = require('../src/models/data');  
 
 mongoose.connect('mongodb+srv://jesus:F4iC0I35R5snjcIs@cluster0-3dz7l.azure.mongodb.net/ironbook-users?retryWrites=true&w=majority', { useNewUrlParser: true })
   //mongoose.connect('mongodb://heroku_b6z2mw6l:1djmt1m9tm8sm1kr2hvabeco79@ds351628.mlab.com:51628/heroku_b6z2mw6l', { useNewUrlParser: true })
@@ -35,15 +38,17 @@ app.use(session({
   }),
 }));
 
+
 app.use(router);
 
 // app.use('/login', require('./routes/auth-routes'));
 app.use(['/', '/home'], require('./routes/home'));
 
+
+// Retorna a lista dos livros do vendedor logadoo (arrumar)
 app.get('/listbooksSell', (request, response) => {
   const { user } = request.session;
-  // console.log(request.session);
-  Book.find()
+  Book.find({ vendorId: user._id })
     .then(bookFromDB => {
       // console.log('Retrieved books from DB:', bookFromDB);
       response.render('listbooksSell', { books: bookFromDB, user });
@@ -52,6 +57,7 @@ app.get('/listbooksSell', (request, response) => {
       console.log('Error: ', err);
     })
 });
+
 
 
 // router.get('/buybooks', (request, response) => {
@@ -88,57 +94,82 @@ app.get('/listbooksSell', (request, response) => {
 
 // **********  A D D   --- B O O K S  ***********//
 
+//All books test
+app.post('/addBooksAll', (request, response, next) => {
+  const { user } = request.session;
+  Book.create(data) 
+  .then((newBooksAll) => {
+      response.render('addBookMessage', { newBooksAll, user });
+    })
+    .catch(error => {
+      console.log(console.log('An error happened: ', error));
+    });
+});
+//////
+
+
+// One book
 app.get('/addBooks', (request, response) => {
   const { user } = request.session;
-  response.render('addBooks', { user });
+  if (user.profile === "1") {
+    response.render('addBooks', { user });
+  }
+  else {
+    //Mensagem de erro de profile ou render direto para profile
+    //response.render('/', { user });
+    response.redirect('/');
+  }
 });
 
 app.post('/addBooks', (request, response, next) => {
   const { user } = request.session;
-  const title = request.body.title;
+  const theTitle = request.body.title;
   const gender = request.body.gender;
-  const author = request.body.author;
+  const theAuthor = request.body.author;
   const price = request.body.price;
   const description = request.body.description;
   const cover = request.body.cover;
   const publishCompany = request.body.publishCompany;
+  const vendorId = '5debf395c949103c80cd9240'
 
-  // if (title === '' || gender === '' || author === "" || price === "" || description === "" || cover === "" || publishCompany === "") {
-  //   response.render('addBooks', {
-  //     errorMessage: 'Please, indicate all informations to add the book',
-  //   });
-  //   return;
-  // }
+  if (theTitle === '' || gender === '' || theAuthor === "" || price === "" || description === "" || cover === "" || publishCompany === "") {
+    response.render('addBooks', {
+      errorMessage: 'Please, indicate all informations to add the book',
+    });
+    return;
+  }
 
-  // Book.findOne({ 'title': title, 'author': author })
-  //   .then(book => {
-  //     if (book.title !== null) {
-  //       response.render('addBooks', {
-  //         errorMessage: 'The title already exists!',
-  //       });
-  //       return;
-  //     }
-  //   })
-  //   .catch(error => {
-  //     next(error);
-  //   });
+  Book.findOne({ 'title': theTitle, 'author': theAuthor })
+    .then(book => {
+      if (book !== null) {
+        response.render('addBooks', {
+          errorMessage: 'The title already exists!',
+        });
+        return;
+      }
+    })
+    .catch(error => {
+      next(error);
+    });
 
-  Book.create({ title: title, gender: gender, author: author, price: price, description: description, cover: cover, publishCompany: publishCompany })
-    .then((newBook) => {
-      console.log('New book infos ' + newBook)
+
+ Book.create({ title: theTitle, gender: gender, author: theAuthor, price: price, description: description, cover: cover, publishCompany: publishCompany, vendorId: vendorId })
+  .then((newBook) => {
       response.render('addBookMessage', { newBook, user });
     })
     .catch(error => {
       console.log(console.log('An error happened: ', error));
     });
 });
+
+
 // **********  E N D  --  A D D   --- B O O K S  ***********//
 
 
 // ********** E D I T --  B O O K S  ***********//
 app.get('/editbooks', (request, response, next) => {
   const { user } = request.session;
-  const id = '5def013c57296f46005e3d5c';
+  const id = user._id;
   Book.findOne({ '_id': id })
     .then(bookDetails => {
       response.render('editbooks', { book: bookDetails, user });
@@ -150,7 +181,7 @@ app.get('/editbooks', (request, response, next) => {
 
 app.post('/editbooks', (request, response, next) => {
   const { user } = request.session;
-  const id = '5def013c57296f46005e3d5c';
+  const id = user._id;
   const title = request.body.title;
   const gender = request.body.gender;
   const author = request.body.author;
@@ -178,30 +209,60 @@ app.post('/editbooks', (request, response, next) => {
 
 // ********** P R O F I L E ***********//
 
-app.get('/profile', (request, response) => {
+app.get('/profile', (request, response, next) => {
   const { user } = request.session;
-  response.render('profile', { user });
-});
-
-app.post('/profile', (request, response, next) => {
-  const username = request.body.username
-  User.findOne({ 'userName': username })
+  User.findOne({ 'userName': user.userName })
     .then(user => {
-      console.log('validou usuario    ');
-      // if (user.userName === null) {
-      //   response.render('/profile', {
-      //     errorMessage: 'The username not exists!',
-      //   });
-      //   return;
-      // }
-      // else {
-      //   response.render('profile', { user });
-      // }
+      if (user === null) {
+        response.render('/profile', {
+          errorMessage: 'The username not exists!',
+        });
+        return;
+      }
+      else {
+        response.render('profile', { user });
+      }
     })
     .catch(error => {
       next(error);
     });
 });
+
+app.post('/updateAccount', (request, response, next) => {
+  const { user } = request.session;
+  const username = request.body.username;
+  const password = request.body.password;
+  const confirmPassword = request.body.confirmPassword;
+  const email = request.body.email;
+  const profile = request.body.profile;
+  const uesrId = user._id;
+
+  // if (username === '' || password === '' || email === "") {
+  //   response.render('profile', {
+  //     errorMessage: 'Indicate a user name, email, profile and a password to sign up',
+  //   });
+  //   return;
+  // }
+  if (password !== confirmPassword) {
+    response.render('profile', {
+      errorMessage: 'The password and confirmation are not the same',
+    });
+    return;
+  }
+
+  const salt = bcrypt.genSaltSync(bcryptSalt);
+  const hashPass = bcrypt.hashSync(password, salt);
+
+  User.findOneAndUpdate({ '_id': uesrId }, { userName: username, email, password: hashPass, profile })
+    .then((newUser) => {
+      console.log(newUser);
+      response.render('profile', { userProfile: newUser, user });
+    })
+    .catch(error => {
+      console.log(console.log('An error happened: ', error));
+    });
+});
+
 
 
 
@@ -233,9 +294,6 @@ app.post('/socialbooks', (request, response, next) => {
 });
 
 // ********** E N D -  B O O K  -  D E T A I L S ***********//
-
-
-
 
 app.get('/listbooksBuy', (request, response) => {
   const { user } = request.session;
