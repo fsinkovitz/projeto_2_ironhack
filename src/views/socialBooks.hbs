@@ -1,15 +1,17 @@
 <nav>
   <div class="nav-items">
     <div>
-        <h1 class="title">IRONBOOKS</h1>
+      <h1 class="title">IRONBOOKS</h1>
     </div>
-    <div>{{ req.session }}</div>
     <div class="buttons">
-    <button type="button" class="logout"><a href="./home">Logout</a></button>
-    <button type="button" class="profile"><a href="./profile">Profile</a></button>
+      <div class="userLogged">{{ user.userName }}</div>
+      <button type="button" class="logout"><a href="./home">Logout</a></button>
+      <button type="button" class="profile"><a href="./profile">Profile</a></button>
     </div>
   </div>
 </nav>
+<p></p>
+<p></p>
 <div>
     <div>
         <img src="book-cover" src="{{this.cover}}">
@@ -24,3 +26,5 @@
     </div>
     <textarea name="comments" id="1" cols="30" rows="10" placeholder="Comment here..."></textarea>
 </div>
+
+
