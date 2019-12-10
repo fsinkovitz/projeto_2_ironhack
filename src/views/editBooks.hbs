@@ -10,19 +10,30 @@
     </div>
   </div>
 </nav>
-<form id="form" action="/add" method="POST">
+
+<form id="form" action="/editbooks" method="POST">
   <h2>Edit Books</h2>
-  <input type="text" name="title" placeholder="Title">
-  <input type="text" name="gender" placeholder="Gender">
-  <input type="text" name="author" placeholder="Author">
-  <input type="number" name="coust" placeholder="R$ 0,00">
-  <textarea name="description" id="" cols="30" rows="10" placeholder="Description"></textarea>
-  <input type="text" name="publishCompany" placeholder="Publish Company">
-  <input type="file" name="cover">
+  <a>Title</a>
+  <input type="text" name="title" value='{{ book.title }}'>
+  <a>Gender</a>
+  <input type="text" name="gender" value='{{ book.gender }}'>
+  <a>Author</a>
+  <input type="text" name="author" value='{{ book.author }}'>
+  <a>Coust</a>
+  <input type="number" name="price" value='{{ book.price }}'>
+  <div>
+    <a>Description</a></div>
+  <textarea name="description" id="description" cols="30" rows="10">{{ book.description }}</textarea>
+  <div>
+    <a>Publish Company</a>
+  </div>
+  <input type="text" name="publishCompany" value='{{ book.publishCompany }}'>
+  <a>Cover</a>
+  <input type="file" name="">
 
   {{#if errorMessage}}
   <div class="error-message">{{ errorMessage }}</div>
   {{/if}}
 
-  <button type="submit">Add Book</button>
+  <button type="submit">Edit Book</button>
 </form>

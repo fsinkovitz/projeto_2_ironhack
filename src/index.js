@@ -86,14 +86,94 @@ app.get('/listbooksSell', (request, response) => {
 // });
 
 
-
-
-
+// **********  A D D   --- B O O K S  ***********//
 
 app.get('/addBooks', (request, response) => {
   const { user } = request.session;
   response.render('addBooks', { user });
 });
+
+app.post('/addBooks', (request, response, next) => {
+  const { user } = request.session;
+  const title = request.body.title;
+  const gender = request.body.gender;
+  const author = request.body.author;
+  const price = request.body.price;
+  const description = request.body.description;
+  const cover = request.body.cover;
+  const publishCompany = request.body.publishCompany;
+
+  // if (title === '' || gender === '' || author === "" || price === "" || description === "" || cover === "" || publishCompany === "") {
+  //   response.render('addBooks', {
+  //     errorMessage: 'Please, indicate all informations to add the book',
+  //   });
+  //   return;
+  // }
+
+  // Book.findOne({ 'title': title, 'author': author })
+  //   .then(book => {
+  //     if (book.title !== null) {
+  //       response.render('addBooks', {
+  //         errorMessage: 'The title already exists!',
+  //       });
+  //       return;
+  //     }
+  //   })
+  //   .catch(error => {
+  //     next(error);
+  //   });
+
+  Book.create({ title: title, gender: gender, author: author, price: price, description: description, cover: cover, publishCompany: publishCompany })
+    .then((newBook) => {
+      console.log('New book infos ' + newBook)
+      response.render('addBookMessage', { newBook, user });
+    })
+    .catch(error => {
+      console.log(console.log('An error happened: ', error));
+    });
+});
+// **********  E N D  --  A D D   --- B O O K S  ***********//
+
+
+// ********** E D I T --  B O O K S  ***********//
+app.get('/editbooks', (request, response, next) => {
+  const { user } = request.session;
+  const id = '5def013c57296f46005e3d5c';
+  Book.findOne({ '_id': id })
+    .then(bookDetails => {
+      response.render('editbooks', { book: bookDetails, user });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
+
+app.post('/editbooks', (request, response, next) => {
+  const { user } = request.session;
+  const id = '5def013c57296f46005e3d5c';
+  const title = request.body.title;
+  const gender = request.body.gender;
+  const author = request.body.author;
+  const price = request.body.price;
+  const description = request.body.description;
+  const cover = request.body.cover;
+  const publishCompany = request.body.publishCompany;
+
+  Book.findOneAndUpdate({ _id: id }, { title: title, gender: gender, author: author, price: price, description: description, cover: cover, publishCompany: publishCompany })
+    .then((editedBook) => {
+      response.render('editbooks', { book: editedBook, user });
+    })
+    .catch(error => {
+      console.log(console.log('An error happened: ', error));
+    });
+});
+// **********  E N D  --  E D I T --  B O O K S  ***********//
+
+
+
+
+
+
 
 
 // ********** P R O F I L E ***********//
@@ -105,7 +185,6 @@ app.get('/profile', (request, response) => {
 
 app.post('/profile', (request, response, next) => {
   const username = request.body.username
-  console.log('passou ' + user);
   User.findOne({ 'userName': username })
     .then(user => {
       console.log('validou usuario    ');
@@ -140,36 +219,28 @@ app.get('/socialbooks', (request, response) => {
 
 app.post('/socialbooks', (request, response, next) => {
   //const bookId = request.body.bookId;
-  console.log(request.body);
+  //console.log(request.body);
+  const title = 'Livro titulo';
 
-  Book.findOne({ slug: "eloquent-javascript" })
-    .then(bookFromDB => {
-     // console.log(bookFromDB);
-      response.render('socialbooks', { book: bookFromDB, user });
+  Book.findOne({ 'title': title })
+    .then(bookDetails => {
+      //  console.log(bookDetails);
+      response.render('socialbooks', { book: bookDetails, user });
     })
     .catch(error => {
       next(error);
     });
 });
 
-
-
 // ********** E N D -  B O O K  -  D E T A I L S ***********//
 
 
 
 
-app.get('/editbooks', (request, response) => {
-  const { user } = request.session;
-  // console.log(request);
-  response.render('editbooks', { user });
-});
-
 app.get('/listbooksBuy', (request, response) => {
   const { user } = request.session;
   Book.find()
     .then(bookFromDB => {
-      // console.log('Retrieved books from DB:', bookFromDB);
       response.render('listbooksBuy', { books: bookFromDB, user });
     })
     .catch(error => {

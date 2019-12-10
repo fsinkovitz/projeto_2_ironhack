@@ -5,8 +5,7 @@ const booksSchema = new Schema(
   {
     title: {
       type: String,
-      required: true,
-      unique: true
+     // required: true
     },
 
     gender: {
@@ -17,30 +16,20 @@ const booksSchema = new Schema(
       type: String
     },
 
-    publishcompany: {
-      type: String
-    },
-
-    descriprion: {
-      type: String
-    },
-
-    value: {
+    price: {
       type: Number,
       required: true
+    },
+    description: {
+      type: String
     },
 
     cover: {
       type: String,
-      required: true
+      // required: true
     },
 
-    qunatity: {
-      type: Number,
-      required: true
-    },
-
-    comments: {
+    publishCompany: {
       type: String
     }
   }
