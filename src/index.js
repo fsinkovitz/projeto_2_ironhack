@@ -40,8 +40,6 @@ app.use(session({
 
 app.use(['/', '/home'], require('./routes/home'));
 
-app.use('addBooks', require('./routes/addBooks'));
-
 // router.get('/buybooks', (request, response) => {
 //   console.log(request);
 //   response.render('buy_books');
