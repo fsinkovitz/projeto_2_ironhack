@@ -1,17 +1,6 @@
-<nav>
-  <div class="nav-items">
-    <div>
-      <h1 class="title">IRONBOOKS</h1>
-    </div>
-    <div class="buttons">
-      <div class="userLogged">{{ user.userName }}</div>
-      <button type="button" class="logout"><a href="./home">Logout</a></button>
-      <button type="button" class="profile"><a href="./profile">Profile</a></button>
-    </div>
-  </div>
-</nav>
 
-<form id="form" action="/editbooks" method="POST">
+
+<form id="form" action="/editbooks/{{ book._id }}" method="POST">
   <h2>Edit Books</h2>
   <a>Title</a>
   <input type="text" name="title" value='{{ book.title }}'>

@@ -15,7 +15,7 @@ const Book = require('../src/models/books');
 const User = require('./models/user');
 const bcrypt = require('bcryptjs');
 const bcryptSalt = 10;
-const data = require('../src/models/data');  
+const data = require('../src/models/data');
 
 mongoose.connect('mongodb+srv://jesus:F4iC0I35R5snjcIs@cluster0-3dz7l.azure.mongodb.net/ironbook-users?retryWrites=true&w=majority', { useNewUrlParser: true })
   //mongoose.connect('mongodb://heroku_b6z2mw6l:1djmt1m9tm8sm1kr2hvabeco79@ds351628.mlab.com:51628/heroku_b6z2mw6l', { useNewUrlParser: true })
@@ -38,45 +38,22 @@ app.use(session({
   }),
 }));
 
-
 app.use(router);
 
 // app.use('/login', require('./routes/auth-routes'));
 app.use(['/', '/home'], require('./routes/home'));
 
-
 // Retorna a lista dos livros do vendedor logadoo (arrumar)
 app.get('/listbooksSell', (request, response) => {
   const { user } = request.session;
-  Book.find({ vendorId: user._id })
+  Book.find({ 'vendorId': user._id })
     .then(bookFromDB => {
-      // console.log('Retrieved books from DB:', bookFromDB);
       response.render('listbooksSell', { books: bookFromDB, user });
     })
     .catch(error => {
       console.log('Error: ', err);
     })
 });
-
-
-
-// router.get('/buybooks', (request, response) => {
-//   console.log(request);
-//   response.render('buy_books');
-// });
-
-// router.get(['/', '/home'], (request, response) => {
-//  // console.log(request);
-//   Book.find()
-//     .then(bookFromDB => {
-//       console.log('Retrieved books from DB:', bookFromDB);
-//       response.render('index', { books: bookFromDB });
-//     })
-//     .catch(error => {
-//       console.log('Error: ', err);
-//     })
-// });
-
 
 // colcoar Id para trazer dados apenas do livro escolhido
 // router.get('/details', (request, response) => {
@@ -97,8 +74,8 @@ app.get('/listbooksSell', (request, response) => {
 //All books test
 app.post('/addBooksAll', (request, response, next) => {
   const { user } = request.session;
-  Book.create(data) 
-  .then((newBooksAll) => {
+  Book.create(data)
+    .then((newBooksAll) => {
       response.render('addBookMessage', { newBooksAll, user });
     })
     .catch(error => {
@@ -153,23 +130,22 @@ app.post('/addBooks', (request, response, next) => {
     });
 
 
- Book.create({ title: theTitle, gender: gender, author: theAuthor, price: price, description: description, cover: cover, publishCompany: publishCompany, vendorId: vendorId })
-  .then((newBook) => {
+  Book.create({ title: theTitle, gender: gender, author: theAuthor, price: price, description: description, cover: cover, publishCompany: publishCompany, vendorId: vendorId })
+    .then((newBook) => {
       response.render('addBookMessage', { newBook, user });
     })
     .catch(error => {
       console.log(console.log('An error happened: ', error));
     });
 });
-
-
 // **********  E N D  --  A D D   --- B O O K S  ***********//
 
 
+
 // ********** E D I T --  B O O K S  ***********//
-app.get('/editbooks', (request, response, next) => {
+app.get('/editbooks/:id', (request, response, next) => {
   const { user } = request.session;
-  const id = user._id;
+  const id = request.params.id;
   Book.findOne({ '_id': id })
     .then(bookDetails => {
       response.render('editbooks', { book: bookDetails, user });
@@ -179,9 +155,10 @@ app.get('/editbooks', (request, response, next) => {
     });
 });
 
-app.post('/editbooks', (request, response, next) => {
+app.post('/editbooks/:id', (request, response, next) => {
   const { user } = request.session;
-  const id = user._id;
+  const bookId = request.params.id;
+  const vendorId = user._id;
   const title = request.body.title;
   const gender = request.body.gender;
   const author = request.body.author;
@@ -190,7 +167,7 @@ app.post('/editbooks', (request, response, next) => {
   const cover = request.body.cover;
   const publishCompany = request.body.publishCompany;
 
-  Book.findOneAndUpdate({ _id: id }, { title: title, gender: gender, author: author, price: price, description: description, cover: cover, publishCompany: publishCompany })
+  Book.findOneAndUpdate({ _id: bookId }, { title: title, gender: gender, author: author, price: price, description: description, cover: cover, publishCompany: publishCompany, vendorId: vendorId })
     .then((editedBook) => {
       response.render('editbooks', { book: editedBook, user });
     })
