@@ -116,7 +116,7 @@ router.post('/login', (req, res, next) => {
       if (bcrypt.compareSync(thePassword, user.password)) {
         // Save the login in the session! 
         req.session = user;
-        res.redirect('/listbooksSell');
+        res.redirect('/listbooksBuy');
       } else {
         res.render('auth/login', {
           errorMessage: 'Incorrect password',

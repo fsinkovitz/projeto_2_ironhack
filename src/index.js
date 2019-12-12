@@ -82,6 +82,17 @@ router.get('/listbooksSell', (request, response) => {
     })
 });
 
+router.get('/listbooksBuy', (request, response) => {
+  Book.find()
+    .then(bookFromDB => {
+     // console.log('Retrieved books from DB:', bookFromDB);
+      response.render('listbooksBuy', { books: bookFromDB });
+    })
+    .catch(error => {
+      console.log('Error: ', err);
+    })
+});
+
 // router.get('/socialbooks', (request, response) => {
 //   console.log(request);
 //   response.render('social_books');
@@ -92,10 +103,10 @@ router.get('/listbooksSell', (request, response) => {
 //   response.render('edit_add_books');
 // });
 
-// router.get('/buybooks', (request, response) => {
-//   console.log(request);
-//   response.render('buy_books');
-// });
+router.get('/payment', (request, response) => {
+  console.log(request);
+  response.render('payment');
+});
 
 //app.listen(process.env.PORT, () => console.log('Listen'));
 app.listen(3000, () => console.log('Listen'));
