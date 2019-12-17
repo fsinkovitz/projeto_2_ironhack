@@ -1,17 +1,4 @@
-<nav>
-  <div class="nav-items">
-    <div>
-      <h1 class="title">IRONBOOKS</h1>
-    </div>
-    <div class="buttons">
-      <div class="userLogged">{{ user.userName }}</div>
-      <button type="button" class="logout"><a href="./home">Logout</a></button>
-      <button type="button" class="profile"><a href="./profile">Profile</a></button>
-    </div>
-  </div>
-</nav>
-
-<form id="form" action="/editbooks" method="POST">
+<form id="form" action="/editbooks/{{ book._id }}" method="POST" enctype="multipart/form-data">
   <h2>Edit Books</h2>
   <a>Title</a>
   <input type="text" name="title" value='{{ book.title }}'>
@@ -29,11 +16,14 @@
   </div>
   <input type="text" name="publishCompany" value='{{ book.publishCompany }}'>
   <a>Cover</a>
-  <input type="file" name="">
+  <input type="file" name="cover" value='{{ book.cover }}'>
 
   {{#if errorMessage}}
   <div class="error-message">{{ errorMessage }}</div>
   {{/if}}
 
   <button type="submit">Edit Book</button>
+  <div>
+    <a href="javascript:history.back()">Go Back</a>
+  </div>
 </form>

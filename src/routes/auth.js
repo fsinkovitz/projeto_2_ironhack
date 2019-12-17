@@ -8,16 +8,27 @@ const bcrypt = require('bcryptjs');
 const bcryptSalt = 10;
 const nodemailer = require('nodemailer');
 
+// router.get('/login', (req, res, next) => {
+//   res.render('auth/login');
+// });
+
 router.get('/login', (req, res, next) => {
-  res.render('auth/login');
+  console.log(req.session.userName);
+  if (req.session.userName !== undefined) {
+    const { user } = req.session;
+    res.redirect('/listbooksSell', { user })
+  }
+  else {
+    res.render('auth/login');
+  }
 });
+
 
 router.get('/signup', (req, res, next) => {
   res.render('auth/signup');
 });
 
-
-//Signup
+//Signup POST
 router.post('/signup', (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -43,54 +54,46 @@ router.post('/signup', (req, res, next) => {
     .then(user => {
       if (user !== null) {
         res.render('auth/signup', {
-          errorMessage: 'The username already exists!',
+          errorMessage: 'The username or email already exists!',
         });
         return;
       }
-      else if (user.email !== null) {
-        res.render('auth/signup', {
-          errorMessage: 'The email already exists in other account!',
+      else {
+        const salt = bcrypt.genSaltSync(bcryptSalt);
+        const hashPass = bcrypt.hashSync(password, salt);
+
+        User.create({ userName: username, email, password: hashPass, profile })
+          .then((newUser) => {
+            res.redirect('/');
+          })
+          .catch(error => {
+            console.log(console.log('An error happened: ', error));
+          });
+
+        //send mail
+        let subject = 'Iron Books registration confirmation';
+        let message = `Please confirm your registration by clicking this link
+        XXXXXXXXXXXXXXXXXSSSSSSSSSZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ`;
+        res.render('message', { email })
+
+        let transporter = nodemailer.createTransport({
+          service: 'Gmail',
+          auth: {
+            user: 'ironbooksproject@gmail.com',
+            pass: 'Ironbooks19@'
+          }
         });
-        return;
+        transporter.sendMail({
+          from: '"Iron Books Project 👻" <ironbooksproject@gmail.com>',
+          to: email + ',ironbooksproject@gmail.com',
+          subject: subject,
+          text: '',
+          html: `<b>${message}</b>`
+        })
+          .then(info => res.render('message', { email, subject, message, info }))
+          .catch(error => console.log(error));
       }
-    })
-    .catch(error => {
-      next(error);
     });
-
-  const salt = bcrypt.genSaltSync(bcryptSalt);
-  const hashPass = bcrypt.hashSync(password, salt);
-
-  User.create({ userName: username, email, password: hashPass, profile })
-    .then((newUser) => {
-      res.redirect('/');
-    })
-    .catch(error => {
-      console.log(console.log('An error happened: ', error));
-    });
-
-  //send mail
-  let subject = 'Iron Books registration confirmation';
-  let message = `Please confirm your registration by clicking this link
-  XXXXXXXXXXXXXXXXXSSSSSSSSSZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ`;
-  res.render('message', { email })
-
-  let transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-      user: 'ironbooksproject@gmail.com',
-      pass: 'Ironbooks19@'
-    }
-  });
-  transporter.sendMail({
-    from: '"Iron Books Project 👻" <ironbooksproject@gmail.com>',
-    to: email + ',ironbooksproject@gmail.com',
-    subject: subject,
-    text: '',
-    html: `<b>${message}</b>`
-  })
-    .then(info => res.render('message', { email, subject, message, info }))
-    .catch(error => console.log(error));
 });
 
 //Login

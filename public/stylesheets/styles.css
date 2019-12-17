@@ -8,7 +8,7 @@ nav {
   background-color: #222831;
   font-family: Arial, Helvetica, sans-serif;
   list-style: none;
-  padding-top: 5px;
+  padding-top: -5px;
   padding-bottom: 5px;
   position: fixed;
   width: 100%;
@@ -167,11 +167,17 @@ p {
   margin-left: 20px;
 }
 
-.profileSelect{
+.parMessage {
+  margin-top: 150px;
+  margin-left: 20px;
+  margin-bottom: 120px;
+}
+
+.profileSelect {
   width: auto;
 }
 
-.userLogged{
+.userLogged {
   margin-top: auto;
   margin-bottom: auto;
   margin-right: 40px;
