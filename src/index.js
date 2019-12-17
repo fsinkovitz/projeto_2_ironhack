@@ -16,6 +16,7 @@ const User = require('./models/user');
 const bcrypt = require('bcryptjs');
 const bcryptSalt = 10;
 const data = require('../src/models/data');
+const uploadCloud = require('./config/cloudnary');
 
 mongoose.connect('mongodb+srv://jesus:F4iC0I35R5snjcIs@cluster0-3dz7l.azure.mongodb.net/ironbook-users?retryWrites=true&w=majority', { useNewUrlParser: true })
   //mongoose.connect('mongodb://heroku_b6z2mw6l:1djmt1m9tm8sm1kr2hvabeco79@ds351628.mlab.com:51628/heroku_b6z2mw6l', { useNewUrlParser: true })
@@ -31,7 +32,7 @@ app.use(express.static(__dirname + '../../public'));
 
 app.use(session({
   secret: 'ironbook-auth-secret',
-  cookie: { maxAge: 60000 },
+  cookie: { maxAge: 600000 },
   store: new MongoStore({
     mongooseConnection: mongoose.connection,
     ttl: 24 * 60 * 60, // 1 day
@@ -40,10 +41,9 @@ app.use(session({
 
 app.use(router);
 
-// app.use('/login', require('./routes/auth-routes'));
 app.use(['/', '/home'], require('./routes/home'));
 
-// Retorna a lista dos livros do vendedor logadoo (arrumar)
+// Retorna a lista dos livros do vendedor logadoo.
 app.get('/listbooksSell', (request, response) => {
   const { user } = request.session;
   Book.find({ 'vendorId': user._id })
@@ -55,59 +55,29 @@ app.get('/listbooksSell', (request, response) => {
     })
 });
 
-// colcoar Id para trazer dados apenas do livro escolhido
-// router.get('/details', (request, response) => {
-//   // console.log(request);
-//   Book.find()
-//     .then(bookFromDB => {
-//      // console.log('Retrieved books from DB:', bookFromDB);
-//       response.render('details', { books: bookFromDB });
-//     })
-//     .catch(error => {
-//       console.log('Error: ', err);
-//     })
-// });
-
-
 // **********  A D D   --- B O O K S  ***********//
-
-//All books test
-app.post('/addBooksAll', (request, response, next) => {
-  const { user } = request.session;
-  Book.create(data)
-    .then((newBooksAll) => {
-      response.render('addBookMessage', { newBooksAll, user });
-    })
-    .catch(error => {
-      console.log(console.log('An error happened: ', error));
-    });
-});
-//////
-
-
-// One book
 app.get('/addBooks', (request, response) => {
   const { user } = request.session;
+  const userMessage = `${user.userName}. You do not have the seller profile. Please update your profile.`
   if (user.profile === "1") {
     response.render('addBooks', { user });
   }
   else {
-    //Mensagem de erro de profile ou render direto para profile
-    //response.render('/', { user });
-    response.redirect('/');
+    response.render('userMessage', { userMessage, user });
   }
 });
 
-app.post('/addBooks', (request, response, next) => {
+app.post('/addBooks', uploadCloud.single("cover"), (request, response, next) => {
   const { user } = request.session;
   const theTitle = request.body.title;
   const gender = request.body.gender;
   const theAuthor = request.body.author;
   const price = request.body.price;
   const description = request.body.description;
-  const cover = request.body.cover;
   const publishCompany = request.body.publishCompany;
-  const vendorId = '5debf395c949103c80cd9240'
+  const cover = request.file.url;
+  const imgName = request.file.originalname;
+  const vendorId = user._id;
 
   if (theTitle === '' || gender === '' || theAuthor === "" || price === "" || description === "" || cover === "" || publishCompany === "") {
     response.render('addBooks', {
@@ -124,23 +94,21 @@ app.post('/addBooks', (request, response, next) => {
         });
         return;
       }
-    })
-    .catch(error => {
-      next(error);
-    });
-
-
-  Book.create({ title: theTitle, gender: gender, author: theAuthor, price: price, description: description, cover: cover, publishCompany: publishCompany, vendorId: vendorId })
-    .then((newBook) => {
-      response.render('addBookMessage', { newBook, user });
-    })
-    .catch(error => {
-      console.log(console.log('An error happened: ', error));
+      else {
+        const newBook = new Book({ title: theTitle, gender: gender, author: theAuthor, price: price, description: description, cover: cover, publishCompany: publishCompany, vendorId: vendorId, imgName: imgName })
+        newBook.save()
+          .then((book) => {
+            console.log(JSON.stringify(newBook));
+            console.log('Book created');
+            response.render('addBookMessage', { newBook, user });
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
     });
 });
 // **********  E N D  --  A D D   --- B O O K S  ***********//
-
-
 
 // ********** E D I T --  B O O K S  ***********//
 app.get('/editbooks/:id', (request, response, next) => {
@@ -155,7 +123,7 @@ app.get('/editbooks/:id', (request, response, next) => {
     });
 });
 
-app.post('/editbooks/:id', (request, response, next) => {
+app.post('/editbooks/:id', uploadCloud.single("cover"), (request, response, next) => {
   const { user } = request.session;
   const bookId = request.params.id;
   const vendorId = user._id;
@@ -164,12 +132,16 @@ app.post('/editbooks/:id', (request, response, next) => {
   const author = request.body.author;
   const price = request.body.price;
   const description = request.body.description;
-  const cover = request.body.cover;
   const publishCompany = request.body.publishCompany;
 
-  Book.findOneAndUpdate({ _id: bookId }, { title: title, gender: gender, author: author, price: price, description: description, cover: cover, publishCompany: publishCompany, vendorId: vendorId })
+  const bookEdit = { title: title, gender: gender, author: author, price: price, description: description, publishCompany: publishCompany, vendorId: vendorId }
+  if (request.file !== undefined) {
+    bookEdit.cover = request.file.url;
+    bookEdit.imgName = request.file.originalname;
+  }
+  Book.findOneAndUpdate({ '_id': bookId }, bookEdit, { new: true })
     .then((editedBook) => {
-      response.render('editbooks', { book: editedBook, user });
+      response.render('editBookMessage', { book: editedBook, user });
     })
     .catch(error => {
       console.log(console.log('An error happened: ', error));
@@ -177,15 +149,7 @@ app.post('/editbooks/:id', (request, response, next) => {
 });
 // **********  E N D  --  E D I T --  B O O K S  ***********//
 
-
-
-
-
-
-
-
 // ********** P R O F I L E ***********//
-
 app.get('/profile', (request, response, next) => {
   const { user } = request.session;
   User.findOne({ 'userName': user.userName })
@@ -214,41 +178,30 @@ app.post('/updateAccount', (request, response, next) => {
   const profile = request.body.profile;
   const uesrId = user._id;
 
-  // if (username === '' || password === '' || email === "") {
-  //   response.render('profile', {
-  //     errorMessage: 'Indicate a user name, email, profile and a password to sign up',
-  //   });
-  //   return;
-  // }
   if (password !== confirmPassword) {
     response.render('profile', {
       errorMessage: 'The password and confirmation are not the same',
     });
     return;
   }
-
   const salt = bcrypt.genSaltSync(bcryptSalt);
   const hashPass = bcrypt.hashSync(password, salt);
+  const editedMessage = `User ${username} edited successfully.`
 
-  User.findOneAndUpdate({ '_id': uesrId }, { userName: username, email, password: hashPass, profile })
+  User.findOneAndUpdate({ '_id': uesrId }, { userName: username, email, password: hashPass, profile }, { new: true })
     .then((newUser) => {
       console.log(newUser);
-      response.render('profile', { userProfile: newUser, user });
+      response.render('editProfileMessage', { editedMessage, user });
     })
     .catch(error => {
       console.log(console.log('An error happened: ', error));
     });
 });
-
-
-
-
-
 // ********** E N D  -  P R O F I L E ***********//
 
 
 
-// ********** B O O K  -  D E T A I L S ***********//
+// ********** B O O K  -   B U Y ***********//
 app.get('/socialbooks', (request, response) => {
   const { user } = request.session;
   response.render('socialbooks', { user });
@@ -256,8 +209,7 @@ app.get('/socialbooks', (request, response) => {
 
 
 app.post('/socialbooks', (request, response, next) => {
-  //const bookId = request.body.bookId;
-  //console.log(request.body);
+
   const title = 'Livro titulo';
 
   Book.findOne({ 'title': title })
@@ -270,7 +222,7 @@ app.post('/socialbooks', (request, response, next) => {
     });
 });
 
-// ********** E N D -  B O O K  -  D E T A I L S ***********//
+// ********** E N D -  B O O K  -  B U Y ***********//
 
 app.get('/listbooksBuy', (request, response) => {
   const { user } = request.session;

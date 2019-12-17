@@ -20,18 +20,23 @@ const booksSchema = new Schema(
       type: Number,
       required: true
     },
+
     description: {
       type: String
     },
 
     cover: {
       type: String,
-      // required: true
+    },
+
+    imgName: {
+      type: String
     },
 
     publishCompany: {
       type: String
     },
+
     vendorId: {
       type: String
     }

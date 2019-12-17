@@ -8,16 +8,27 @@ const bcrypt = require('bcryptjs');
 const bcryptSalt = 10;
 const nodemailer = require('nodemailer');
 
+// router.get('/login', (req, res, next) => {
+//   res.render('auth/login');
+// });
+
 router.get('/login', (req, res, next) => {
-  res.render('auth/login');
+  console.log(req.session.userName);
+  if (req.session.userName !== undefined) {
+    const { user } = req.session;
+    res.redirect('/listbooksSell', { user })
+  }
+  else {
+    res.render('auth/login');
+  }
 });
+
 
 router.get('/signup', (req, res, next) => {
   res.render('auth/signup');
 });
 
-
-//Signup
+//Signup POST
 router.post('/signup', (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -81,7 +92,6 @@ router.post('/signup', (req, res, next) => {
         })
           .then(info => res.render('message', { email, subject, message, info }))
           .catch(error => console.log(error));
-
       }
     });
 });
