@@ -6,7 +6,7 @@ const userVerificationSchema = new Schema(
     userId: {
       type: String,
       unique: true
-    }
+    }    
   }
 );
 

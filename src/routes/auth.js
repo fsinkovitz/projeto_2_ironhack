@@ -8,25 +8,36 @@ const bcrypt = require('bcryptjs');
 const bcryptSalt = 10;
 const nodemailer = require('nodemailer');
 
+// router.get('/login', (req, res, next) => {
+//   res.render('auth/login');
+// });
+
+router.get('/login', (req, res, next) => {
+  console.log(req.session.userName);
+  if (req.session.userName !== undefined) {
+    const { user } = req.session;
+    res.redirect('/listbooksSell', { user })
+  }
+  else {
+    res.render('auth/login');
+  }
+});
+
+
 router.get('/signup', (req, res, next) => {
   res.render('auth/signup');
 });
 
-router.get('/login', (req, res, next) => {
-  res.render('auth/login');
-});
-
-//Signup
+//Signup POST
 router.post('/signup', (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
   const email = req.body.email;
   const profile = req.body.profile;
-  const message = req.body.message;
+  //const message = req.body.message;
 
-
-  if (username === '' || password === '' || profile === '') {
+  if (username === '' || password === '' || email === "") {
     res.render('auth/signup', {
       errorMessage: 'Indicate a user name, email, profile and a password to sign up',
     });
@@ -39,58 +50,50 @@ router.post('/signup', (req, res, next) => {
     return;
   }
 
-  User.findOne({ 'username': username, 'email': email })
+  User.findOne({ 'userName': username, 'email': email })
     .then(user => {
       if (user !== null) {
         res.render('auth/signup', {
-          errorMessage: 'The username already exists!',
+          errorMessage: 'The username or email already exists!',
         });
         return;
       }
-      else if (email !== null) {
-        res.render('auth/signup', {
-          errorMessage: 'The email already exists in other account!',
+      else {
+        const salt = bcrypt.genSaltSync(bcryptSalt);
+        const hashPass = bcrypt.hashSync(password, salt);
+
+        User.create({ userName: username, email, password: hashPass, profile })
+          .then((newUser) => {
+            res.redirect('/');
+          })
+          .catch(error => {
+            console.log(console.log('An error happened: ', error));
+          });
+
+        //send mail
+        let subject = 'Iron Books registration confirmation';
+        let message = `Please confirm your registration by clicking this link
+        XXXXXXXXXXXXXXXXXSSSSSSSSSZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ`;
+        res.render('message', { email })
+
+        let transporter = nodemailer.createTransport({
+          service: 'Gmail',
+          auth: {
+            user: 'ironbooksproject@gmail.com',
+            pass: 'Ironbooks19@'
+          }
         });
-        return;
+        transporter.sendMail({
+          from: '"Iron Books Project 👻" <ironbooksproject@gmail.com>',
+          to: email + ',ironbooksproject@gmail.com',
+          subject: subject,
+          text: '',
+          html: `<b>${message}</b>`
+        })
+          .then(info => res.render('message', { email, subject, message, info }))
+          .catch(error => console.log(error));
       }
-    })
-    .catch(error => {
-      next(error);
     });
-
-  const salt = bcrypt.genSaltSync(bcryptSalt);
-  const hashPass = bcrypt.hashSync(password, salt);
-
-  User.create({ userName: username, email, password: hashPass, profile })
-    .then((newUser) => {
-      console.log(newUser);
-      console.log('User created. ' + newUser.username + ' pass: ' + newUser.hashPass);
-      res.redirect('/');
-    })
-    .catch(error => {
-      console.log(console.log('An error happened: ', error));
-    });
-
-  //send mail
-  let subject = 'Assunto do email';
-  res.render('message', { email, subject, message })
-
-  let transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-      user: 'ironbooksproject@gmail.com',
-      pass: 'Ironbooks19@'
-    }
-  });
-  transporter.sendMail({
-    from: '"Iron Books Project 👻" <ironbooksproject@gmail.com>',
-    to: email,
-    subject: subject,
-    text: message,
-    html: `<b>${message}</b>`
-  })
-    .then(info => res.render('message', { email, subject, message, info }))
-    .catch(error => console.log(error));
 });
 
 //Login
@@ -117,6 +120,14 @@ router.post('/login', (req, res, next) => {
         // Save the login in the session! 
         req.session = user;
         res.redirect('/listbooksBuy');
+        req.session.user = user;
+
+        if (user.profile === '1') {
+          res.redirect('/listbooksSell');
+        }
+        else {
+          res.redirect('/listbooksBuy');
+        }
       } else {
         res.render('auth/login', {
           errorMessage: 'Incorrect password',

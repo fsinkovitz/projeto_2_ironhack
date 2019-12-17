@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const booksSchema = new Schema(
   {
     title: {
-      type: String,
+      type: String
     },
 
     gender: {
@@ -15,27 +15,35 @@ const booksSchema = new Schema(
       type: String
     },
 
-    publishcompany: {
-      type: String
+    price: {
+      type: Number
+      required: true
     },
 
-    descriprion: {
+    description: {
       type: String
     },
-
     value: {
-      type: Number,
+      type: Number
     },
 
     cover: {
-      type: String,
+      type: String
     },
 
     qunatity: {
-      type: Number,
+      type: Number
     },
 
-    comments: {
+    imgName: {
+      type: String
+    },
+
+    publishCompany: {
+      type: String
+    },
+
+    vendorId: {
       type: String
     }
   }
