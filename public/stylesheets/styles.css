@@ -1,7 +1,7 @@
 * {
   padding: 0px;
   margin: 0px;
-  border: solid transparent 2px;
+  border: solid red 2px;
 }
 
 nav {
@@ -383,4 +383,19 @@ iframe {
     margin: 20px auto;
     padding: 20px;
     width: 100%;
+  }
+
+  .checkout {
+    display: flex;
+    justify-content: center;
+    justify-content: space-around;
+  }
+
+  .details-buy-book {
+    margin-top: 150px;
+  }
+
+  .details-book-cover {
+    margin-top: 150px;
+    margin-right: -380px;
   }

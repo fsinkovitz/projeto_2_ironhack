@@ -10,19 +10,20 @@
     </div>
   </div>
 </nav>
-<div>
-    <div>
-        <img src="book-cover" src="{{this.cover}}">
+<section class="checkout">
+    <div class="details-book-cover">
+        <img src="https://res.cloudinary.com/dm9ezmpgm/image/upload/v1574791802/Ironbooks/rework_qprbbn.jpg">
     </div>
-    <div>
-        <h2>{{this.title}}</h2>
-        <h3>{{this.price}}</h3>
-        <h4>{{this.description}}</h4>
+    <div class="details-buy-book"> 
+        <h2>Title {{this.title}}</h2>
+        <h3>price {{this.price}}</h3>
+        <h4>description {{this.description}}</h4>
         <input type="number" value="1">
-        <h3>Total $ </h3>
+        <h3>Total $</h3>
     </div>
     <div>
         <form id="form" action="" method="POST">
+            <h2>Checkout</h2>
             <input type="text" name="cardnumber" placeholder="1234XXXX.XXXX.5678">
             <input type="text" name="expiredate" placeholder="MMYY">
             <input type="text" name="cvv" placeholder="CVV">
@@ -30,4 +31,4 @@
             <button type="button">Pay</button>
         </form>
     </div>
-</div>
+</section>
