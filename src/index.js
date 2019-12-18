@@ -21,7 +21,9 @@ const uploadCloud = require('./config/cloudnary');
 
 //mongoose.connect('mongodb+srv://jesus:F4iC0I35R5snjcIs@cluster0-3dz7l.azure.mongodb.net/ironbook-users?retryWrites=true&w=majority', { useNewUrlParser: true })
 // DEV mongoose.connect('mongodb://heroku_b6z2mw6l:1djmt1m9tm8sm1kr2hvabeco79@ds351628.mlab.com:51628/heroku_b6z2mw6l', { useNewUrlParser: true })
-mongoose.connect('mongodb://heroku_l3rp0s5l:ocedsjema6l0lq5utsgja79gvv@ds141661.mlab.com:41661/heroku_l3rp0s5l', { useNewUrlParser: true })
+mongoose.connect('mongodb://heroku_l3rp0s5l:ocedsjema6l0lq5utsgja79gvv@ds141661.mlab.com:41661/heroku_l3rp0s5l', {
+    useNewUrlParser: true
+  })
   .then(() => {
     console.log('Connected to Mongo!');
   })
@@ -34,7 +36,9 @@ app.use(express.static(__dirname + '../../public'));
 
 app.use(session({
   secret: 'ironbook-auth-secret',
-  cookie: { maxAge: 600000 },
+  cookie: {
+    maxAge: 600000
+  },
   store: new MongoStore({
     mongooseConnection: mongoose.connection,
     ttl: 24 * 60 * 60, // 1 day
@@ -47,13 +51,16 @@ app.use(['/', '/home'], require('./routes/home'));
 
 
 app.get('/home', (request, response) => {
-  const { user } = request.session;
+  const {
+    user
+  } = request.session;
   console.log('home user kljflkjflsdjfsd    ' + user)
   if (user === undefined) {
     response.render('/auth/login');
-  }
-  else {
-    response.render('home', { user });
+  } else {
+    response.render('home', {
+      user
+    });
   }
 });
 
@@ -62,10 +69,17 @@ app.get('/home', (request, response) => {
 
 // Retorna a lista dos livros do vendedor logadoo.
 app.get('/listbooksSell', (request, response) => {
-  const { user } = request.session;
-  Book.find({ 'vendorId': user._id })
+  const {
+    user
+  } = request.session;
+  Book.find({
+      'vendorId': user._id
+    })
     .then(bookFromDB => {
-      response.render('listbooksSell', { books: bookFromDB, user });
+      response.render('listbooksSell', {
+        books: bookFromDB,
+        user
+      });
     })
     .catch(error => {
       console.log('Error: ', error);
@@ -74,18 +88,26 @@ app.get('/listbooksSell', (request, response) => {
 
 // **********  A D D   --- B O O K S  ***********//
 app.get('/addBooks', (request, response) => {
-  const { user } = request.session;
+  const {
+    user
+  } = request.session;
   const userMessage = `${user.userName}. You do not have the seller profile. Please update your profile.`
   if (user.profile === "1") {
-    response.render('addBooks', { user });
-  }
-  else {
-    response.render('userMessage', { userMessage, user });
+    response.render('addBooks', {
+      user
+    });
+  } else {
+    response.render('userMessage', {
+      userMessage,
+      user
+    });
   }
 });
 
 app.post('/addBooks', uploadCloud.single("cover"), (request, response, next) => {
-  const { user } = request.session;
+  const {
+    user
+  } = request.session;
   const theTitle = request.body.title;
   const gender = request.body.gender;
   const theAuthor = request.body.author;
@@ -103,21 +125,36 @@ app.post('/addBooks', uploadCloud.single("cover"), (request, response, next) => 
     return;
   }
 
-  Book.findOne({ 'title': theTitle, 'author': theAuthor })
+  Book.findOne({
+      'title': theTitle,
+      'author': theAuthor
+    })
     .then(book => {
       if (book !== null) {
         response.render('addBooks', {
           errorMessage: 'The title already exists!',
         });
         return;
-      }
-      else {
-        const newBook = new Book({ title: theTitle, gender: gender, author: theAuthor, price: price, description: description, cover: cover, publishCompany: publishCompany, vendorId: vendorId, imgName: imgName })
+      } else {
+        const newBook = new Book({
+          title: theTitle,
+          gender: gender,
+          author: theAuthor,
+          price: price,
+          description: description,
+          cover: cover,
+          publishCompany: publishCompany,
+          vendorId: vendorId,
+          imgName: imgName
+        })
         newBook.save()
           .then((book) => {
             console.log('New book add   ', JSON.stringify(newBook));
             console.log('Book created');
-            response.render('addBookMessage', { newBook, user });
+            response.render('addBookMessage', {
+              newBook,
+              user
+            });
           })
           .catch(error => {
             console.log('Error: ', error);
@@ -129,11 +166,18 @@ app.post('/addBooks', uploadCloud.single("cover"), (request, response, next) => 
 
 // ********** E D I T --  B O O K S  ***********//
 app.get('/editbooks/:id', (request, response, next) => {
-  const { user } = request.session;
+  const {
+    user
+  } = request.session;
   const id = request.params.id;
-  Book.findOne({ '_id': id })
+  Book.findOne({
+      '_id': id
+    })
     .then(bookDetails => {
-      response.render('editbooks', { book: bookDetails, user });
+      response.render('editbooks', {
+        book: bookDetails,
+        user
+      });
     })
     .catch(error => {
       console.log('Error: ', error);
@@ -141,7 +185,9 @@ app.get('/editbooks/:id', (request, response, next) => {
 });
 
 app.post('/editbooks/:id', uploadCloud.single("cover"), (request, response, next) => {
-  const { user } = request.session;
+  const {
+    user
+  } = request.session;
   const bookId = request.params.id;
   const vendorId = user._id;
   const title = request.body.title;
@@ -151,14 +197,29 @@ app.post('/editbooks/:id', uploadCloud.single("cover"), (request, response, next
   const description = request.body.description;
   const publishCompany = request.body.publishCompany;
 
-  const bookEdit = { title: title, gender: gender, author: author, price: price, description: description, publishCompany: publishCompany, vendorId: vendorId }
+  const bookEdit = {
+    title: title,
+    gender: gender,
+    author: author,
+    price: price,
+    description: description,
+    publishCompany: publishCompany,
+    vendorId: vendorId
+  }
   if (request.file !== undefined) {
     bookEdit.cover = request.file.url;
     bookEdit.imgName = request.file.originalname;
   }
-  Book.findOneAndUpdate({ '_id': bookId }, bookEdit, { new: true })
+  Book.findOneAndUpdate({
+      '_id': bookId
+    }, bookEdit, {
+      new: true
+    })
     .then((editedBook) => {
-      response.render('editBookMessage', { book: editedBook, user });
+      response.render('editBookMessage', {
+        book: editedBook,
+        user
+      });
     })
     .catch(error => {
       console.log('An error happened: ', error);
@@ -168,17 +229,22 @@ app.post('/editbooks/:id', uploadCloud.single("cover"), (request, response, next
 
 // ********** P R O F I L E ***********//
 app.get('/profile', (request, response, next) => {
-  const { user } = request.session;
-  User.findOne({ 'userName': user.userName })
+  const {
+    user
+  } = request.session;
+  User.findOne({
+      'userName': user.userName
+    })
     .then(user => {
       if (user === null) {
         response.render('/profile', {
           errorMessage: 'The username not exists!',
         });
         return;
-      }
-      else {
-        response.render('profile', { user });
+      } else {
+        response.render('profile', {
+          user
+        });
       }
     })
     .catch(error => {
@@ -187,7 +253,9 @@ app.get('/profile', (request, response, next) => {
 });
 
 app.post('/updateAccount', (request, response, next) => {
-  const { user } = request.session;
+  const {
+    user
+  } = request.session;
   const username = request.body.username;
   const password = request.body.password;
   const confirmPassword = request.body.confirmPassword;
@@ -205,10 +273,22 @@ app.post('/updateAccount', (request, response, next) => {
   const hashPass = bcrypt.hashSync(password, salt);
   const editedMessage = `User ${username} edited successfully.`
 
-  User.findOneAndUpdate({ '_id': uesrId }, { userName: username, email, password: hashPass, profile }, { new: true })
+  User.findOneAndUpdate({
+      '_id': uesrId
+    }, {
+      userName: username,
+      email,
+      password: hashPass,
+      profile
+    }, {
+      new: true
+    })
     .then((newUser) => {
       console.log('New user  ', newUser);
-      response.render('editProfileMessage', { editedMessage, user });
+      response.render('editProfileMessage', {
+        editedMessage,
+        user
+      });
     })
     .catch(error => {
       console.log(console.log('An error happened: ', error));
@@ -220,11 +300,18 @@ app.post('/updateAccount', (request, response, next) => {
 
 // ********** B O O K  -   B U Y ***********//
 app.get('/socialBooks/:id', (request, response, next) => {
-  const { user } = request.session;
+  const {
+    user
+  } = request.session;
   const id = request.params.id;
-  Book.findOne({ '_id': id })
+  Book.findOne({
+      '_id': id
+    })
     .then(bookDetails => {
-      response.render('socialBooks', { book: bookDetails, user });
+      response.render('socialBooks', {
+        book: bookDetails,
+        user
+      });
     })
     .catch(error => {
       console.log('Error: ', error);
@@ -234,10 +321,15 @@ app.get('/socialBooks/:id', (request, response, next) => {
 // ********** E N D -  B O O K  -  B U Y ***********//
 
 app.get('/listbooksBuy', (request, response) => {
-  const { user } = request.session;
+  const {
+    user
+  } = request.session;
   Book.find()
     .then(bookFromDB => {
-      response.render('listbooksBuy', { books: bookFromDB, user });
+      response.render('listbooksBuy', {
+        books: bookFromDB,
+        user
+      });
     })
     .catch(error => {
       console.log('Error: ', error);
@@ -247,11 +339,18 @@ app.get('/listbooksBuy', (request, response) => {
 
 
 app.get('/payment/:id', (request, response, next) => {
-  const { user } = request.session;
+  const {
+    user
+  } = request.session;
   const id = request.params.id;
-  Book.findOne({ '_id': id })
+  Book.findOne({
+      '_id': id
+    })
     .then(bookDetails => {
-      response.render('payment', { book: bookDetails, user });
+      response.render('payment', {
+        book: bookDetails,
+        user
+      });
     })
     .catch(error => {
       console.log('Error: ', error);
@@ -261,7 +360,9 @@ app.get('/payment/:id', (request, response, next) => {
 //app.listen(3000, () => console.log('Listen'));
 
 app.post('/paymentBook/:id', (request, response, next) => {
-  const { user } = request.session;
+  const {
+    user
+  } = request.session;
   const id = request.params.id
   const title = request.body.title;
   const price = request.body.price;
@@ -270,21 +371,33 @@ app.post('/paymentBook/:id', (request, response, next) => {
   const cvv = request.body.cvv;
   const name = request.body.name;
 
-  console.log('o body  ' , request.body);
+  console.log('o body  ', request.body);
 
   if (cardnumber === '' || expiredate === '' || cvv === "" || name === "") {
-    response.render('/paymentBook/:id', { id }, {
+    response.render('/paymentBook/:id', {
+      id
+    }, {
       errorMessage: 'Please, fill in all credit card details.',
     });
     return;
-  }
-  else {
-    const bookBuy = new Payment({ cardNumber: cardnumber, cardExpirationDate: expiredate, cardCvv: cvv, userName: name, price: price, titleBook: title, bookId: id });
+  } else {
+    const bookBuy = new Payment({
+      cardNumber: cardnumber,
+      cardExpirationDate: expiredate,
+      cardCvv: cvv,
+      userName: name,
+      price: price,
+      titleBook: title,
+      bookId: id
+    });
 
     bookBuy.save()
       .then((bookBuy) => {
         console.log('Book pay    ', JSON.stringify(bookBuy));
-        response.render('payBookMessage', { bookBuy, user });
+        response.render('payBookMessage', {
+          bookBuy,
+          user
+        });
       })
       .catch(error => {
         console.log('Error: ', error);
@@ -293,7 +406,6 @@ app.post('/paymentBook/:id', (request, response, next) => {
 });
 
 
-app.listen(3000, () => console.log('Listen'));
+//app.listen(3000, () => console.log('Listen'));
 
-//app.listen(process.env.PORT, () => console.log('Listen'));
-
+app.listen(process.env.PORT, () => console.log('Listen'));
