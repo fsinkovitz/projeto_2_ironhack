@@ -1,28 +1,19 @@
-<nav>
-  <div class="nav-items">
-    <div>
-        <h1 class="title">IRONBOOKS</h1>
-    </div>
-    <div>{{ req.session }}</div>
-    <div class="buttons">
-    <button type="button" class="logout"><a href="./home">Logout</a></button>
-      <button type="button" class="profile"><a href="./profile">Profile</a></button>
-    </div>
+<form id="form" action="/addBooks" method="POST" enctype="multipart/form-data">
+  <h2>Add Books</h2>
+  <input type="text" name="title" placeholder="Title">
+  <input type="text" name="gender" placeholder="Gender">
+  <input type="text" name="author" placeholder="Author">
+  <input type="number" name="price" placeholder="R$ 0,00">
+  <textarea name="description" id="description" cols="30" rows="10" placeholder="Description"></textarea>
+  <input type="text" name="publishCompany" placeholder="Publish Company">
+  <input type="file" name="cover">
+
+  {{#if errorMessage}}
+  <div class="error-message">{{ errorMessage }}</div>
+  {{/if}}
+
+  <button type="submit">Add Book</button>
+  <div>
+    <a href="javascript:history.back()">Go Back</a>
   </div>
-</nav>
-<form id="form" action="/add" method="POST">
-    <h2>Sign up</h2>
-    <input type="text" name="title" placeholder="Title">
-    <input type="text" name="gender" placeholder="Gender">
-    <input type="text" name="author" placeholder="Author">
-    <input type="number" name="coust" placeholder="R$ 0,00">
-    <textarea name="description" id="" cols="30" rows="10" placeholder="Description"></textarea>
-    <input type="text" name="publishCompany" placeholder="Publish Company">
-    <input type="file" name="cover">
-
-    {{#if errorMessage}}
-    <div class="error-message">{{ errorMessage }}</div>
-    {{/if}}
-
-    <button type="submit">Add Book</button>
 </form>

@@ -1,0 +1,36 @@
+<nav>
+  <div class="nav-items">
+    <div>
+      <h1 class="title"><a href="/home">IRONBOOKS</a></h1>
+    </div>
+    <div class="buttons">
+      <button type="button" class="signup"><a href="./signup">Sign up</a></button>
+      <button type="button" class="login"><a href="./home">Home</a></button>
+    </div>
+  </div>
+</nav>
+<form id="form" action="/updateAccount" method="POST">
+  <h2>Update Account</h2>
+  <a>Username</a>
+  <input type="text" name="username" disabled="true" value='{{ user.userName }}'>
+  <a>Email</a>
+  <input type="text" name="email" disabled="true" value='{{ user.email }}'>
+  <a>Profile</a>
+  <div>
+    <select class="profileSelect" name="profile">
+      <option value="1">Buy</option>
+      <option value="2">Sale</option>
+    </select>
+  </div>
+  <a>Password</a>
+  <input type="password" name="password" placeholder="Your new password">
+  <a>Password confirm</a>
+  <input type="password" name="confirmPassword" placeholder="Confirm your new password">
+  {{!-- <input type="text" name="message" value="teste message" > --}}
+
+  {{#if errorMessage}}
+  <div class="error-message">{{ errorMessage }}</div>
+  {{/if}}
+
+  <button type="submit">Update account</button>
+</form>
