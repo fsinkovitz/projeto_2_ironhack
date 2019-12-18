@@ -20,7 +20,7 @@ const uploadCloud = require('./config/cloudnary');
 
 //mongoose.connect('mongodb+srv://jesus:F4iC0I35R5snjcIs@cluster0-3dz7l.azure.mongodb.net/ironbook-users?retryWrites=true&w=majority', { useNewUrlParser: true })
 // DEV mongoose.connect('mongodb://heroku_b6z2mw6l:1djmt1m9tm8sm1kr2hvabeco79@ds351628.mlab.com:51628/heroku_b6z2mw6l', { useNewUrlParser: true })
-mongoose.coonect('mongodb://heroku_l3rp0s5l:ocedsjema6l0lq5utsgja79gvv@ds141661.mlab.com:41661/heroku_l3rp0s5l', { useNewUrlParser: true })
+mongoose.connect('mongodb://heroku_l3rp0s5l:ocedsjema6l0lq5utsgja79gvv@ds141661.mlab.com:41661/heroku_l3rp0s5l', { useNewUrlParser: true })
   .then(() => {
     console.log('Connected to Mongo!');
   })
