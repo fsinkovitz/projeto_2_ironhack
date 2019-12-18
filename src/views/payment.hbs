@@ -1,33 +1,31 @@
-<nav>
-  <div class="nav-items">
+
+<div class="divPai">
     <div>
-        <h1 class="title">IRONBOOKS</h1>
-    </div>
-    <div>{{ req.session }}</div>
-    <div class="buttons">
-    <button type="button" class="logout"><a href="./home">Logout</a></button>
-    <button type="button" class="profile"><a href="./profile">Profile</a></button>
-    </div>
-  </div>
-</nav>
-<div>
-    <div>
-        <img src="book-cover" src="{{this.cover}}">
+        <img class="imgCover" src="{{book.cover}}">
     </div>
     <div>
-        <h2>{{this.title}}</h2>
-        <h3>{{this.price}}</h3>
-        <h4>{{this.description}}</h4>
-        <input type="number" value="1">
-        <h3>Total $ </h3>
-    </div>
-    <div>
-        <form id="form" action="" method="POST">
-            <input type="text" name="cardnumber" placeholder="1234XXXX.XXXX.5678">
-            <input type="text" name="expiredate" placeholder="MMYY">
-            <input type="text" name="cvv" placeholder="CVV">
-            <input type="text" name="name" placeholder="Your name">
-            <button type="button">Pay</button>
+        <form id="form" action="/paymentBook/{{ book._id }}" method="POST">
+            <div class="divDetailsItems">
+              <input type="text" id="title" name="title" value=`<spam class="spamTitle">Title: </spam>
+                <spam class="spamTitle" >{{ book.title }}</spam>`>
+            </div>
+            <div class="divDetailsItems">
+                <spam class="spamTitle">Price: </spam>
+                <spam class="spamTitle" id="price" name="price">{{ book.price }}</spam>
+            </div>
+
+            <input type="text" name="cardnumber" maxlength="16" placeholder="1234XXXX.XXXX.5678">
+            <input type="text" name="expiredate" maxlength="5" placeholder="MM/YY">
+            <input type="text" name="cvv" maxlength="3" placeholder="CVV">
+            <input type="text" name="name" value='{{ user.userName }}' placeholder="Your name">
+         
+            {{#if errorMessage}}
+            <div class="error-message">{{ errorMessage }}</div>
+            {{/if}}
+
+            <button type="submit">Pay</button>
+
+            <button type="button" onclick="javascript:history.back()">Go Back</button>
         </form>
     </div>
 </div>

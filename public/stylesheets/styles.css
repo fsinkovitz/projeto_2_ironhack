@@ -355,6 +355,15 @@ iframe {
   line-height: 35px;
 }
 
+.formPayment {
+  margin: 30px auto;
+  width: 680px;
+  color: azure;
+  background-color: #1d4d4f;
+  border-radius: 10px;
+  margin-top: 150px;
+}
+
 #form {
   margin: 30px auto;
   width: 380px;
@@ -362,6 +371,27 @@ iframe {
   background-color: #1d4d4f;
   border-radius: 10px;
   margin-top: 150px;
+}
+
+.formButton {
+  box-sizing: border-box;
+  font-size: 14px;
+  outline: 0;
+  padding: 4px;
+  width: 100%;
+  margin-bottom: 20px;
+  background: #43a3e6;
+  border: 1px solid #43a3e6;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  padding: 8px 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: .3s ease background;
+  width: 100%;
 }
 
 #form input, #form button, #form select {
@@ -419,4 +449,38 @@ iframe {
   margin: 20px auto;
   padding: 20px;
   width: 100%;
+}
+
+.goBack {
+  font-size: 18pt;
+}
+
+.divPai {
+  display: flex;
+  justify-content: center;
+  justify-content: space-around;
+}
+
+.imgCover {
+  margin-top: 120px;
+  margin-bottom: 50px;
+  width: 400px;
+  height: 550px;
+}
+
+.divDetails {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 30px;
+  justify-content: space-between;
+}
+
+.divDetailsItems {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.spamTitle {
+  font-size: 16pt;
+  font-weight: bold;
 }

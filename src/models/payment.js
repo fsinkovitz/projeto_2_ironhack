@@ -6,26 +6,33 @@ const paymentSchema = new Schema(
     cardNumber: {
       type: String,
       required: true,
-      unique: true
     },
 
     cardExpirationDate: {
       type: String,
       required: true,
-      unique: true
     },
 
     cardCvv: {
       type: String,
       required: true,
-      unique: true
     },
 
     userName: {
       type: String,
       required: true,
-      unique: true
     },
+    price: {
+      type: String
+    },
+
+    titleBook: {
+      type: String
+    },
+
+    bookId: {
+      type: String,
+    }
   }
 );
 

@@ -13,6 +13,7 @@ const hbs = require('hbs');
 const axios = require('axios').default;
 const Book = require('../src/models/books');
 const User = require('./models/user');
+const Payment = require('./models/payment')
 const bcrypt = require('bcryptjs');
 const bcryptSalt = 10;
 const data = require('../src/models/data');
@@ -43,6 +44,21 @@ app.use(router);
 
 app.use(['/', '/home'], require('./routes/home'));
 
+
+app.get('/home', (request, response) => {
+  const { user } = request.session;
+  console.log('home user kljflkjflsdjfsd    ' + user)
+  if (user === undefined) {
+    response.render('/auth/login');
+  }
+  else {
+    response.render('home', { user });
+  }
+});
+
+
+
+
 // Retorna a lista dos livros do vendedor logadoo.
 app.get('/listbooksSell', (request, response) => {
   const { user } = request.session;
@@ -51,7 +67,7 @@ app.get('/listbooksSell', (request, response) => {
       response.render('listbooksSell', { books: bookFromDB, user });
     })
     .catch(error => {
-      console.log('Error: ', err);
+      console.log('Error: ', error);
     })
 });
 
@@ -98,12 +114,12 @@ app.post('/addBooks', uploadCloud.single("cover"), (request, response, next) => 
         const newBook = new Book({ title: theTitle, gender: gender, author: theAuthor, price: price, description: description, cover: cover, publishCompany: publishCompany, vendorId: vendorId, imgName: imgName })
         newBook.save()
           .then((book) => {
-            console.log(JSON.stringify(newBook));
+            console.log('New book add   ', JSON.stringify(newBook));
             console.log('Book created');
             response.render('addBookMessage', { newBook, user });
           })
           .catch(error => {
-            console.log(error);
+            console.log('Error: ', error);
           });
       }
     });
@@ -119,7 +135,7 @@ app.get('/editbooks/:id', (request, response, next) => {
       response.render('editbooks', { book: bookDetails, user });
     })
     .catch(error => {
-      next(error);
+      console.log('Error: ', error);
     });
 });
 
@@ -144,7 +160,7 @@ app.post('/editbooks/:id', uploadCloud.single("cover"), (request, response, next
       response.render('editBookMessage', { book: editedBook, user });
     })
     .catch(error => {
-      console.log(console.log('An error happened: ', error));
+      console.log('An error happened: ', error);
     });
 });
 // **********  E N D  --  E D I T --  B O O K S  ***********//
@@ -165,7 +181,7 @@ app.get('/profile', (request, response, next) => {
       }
     })
     .catch(error => {
-      next(error);
+      console.log('Error: ', error);
     });
 });
 
@@ -190,7 +206,7 @@ app.post('/updateAccount', (request, response, next) => {
 
   User.findOneAndUpdate({ '_id': uesrId }, { userName: username, email, password: hashPass, profile }, { new: true })
     .then((newUser) => {
-      console.log(newUser);
+      console.log('New user  ', newUser);
       response.render('editProfileMessage', { editedMessage, user });
     })
     .catch(error => {
@@ -202,23 +218,15 @@ app.post('/updateAccount', (request, response, next) => {
 
 
 // ********** B O O K  -   B U Y ***********//
-app.get('/socialbooks', (request, response) => {
+app.get('/socialBooks/:id', (request, response, next) => {
   const { user } = request.session;
-  response.render('socialbooks', { user });
-});
-
-
-app.post('/socialbooks', (request, response, next) => {
-
-  const title = 'Livro titulo';
-
-  Book.findOne({ 'title': title })
+  const id = request.params.id;
+  Book.findOne({ '_id': id })
     .then(bookDetails => {
-      //  console.log(bookDetails);
-      response.render('socialbooks', { book: bookDetails, user });
+      response.render('socialBooks', { book: bookDetails, user });
     })
     .catch(error => {
-      next(error);
+      console.log('Error: ', error);
     });
 });
 
@@ -231,16 +239,56 @@ app.get('/listbooksBuy', (request, response) => {
       response.render('listbooksBuy', { books: bookFromDB, user });
     })
     .catch(error => {
-      console.log('Error: ', err);
+      console.log('Error: ', error);
     })
 });
 
-app.get('/payment', (request, response) => {
+
+
+app.get('/payment/:id', (request, response, next) => {
   const { user } = request.session;
-  // console.log(request);
-  response.render('payment', { user });
+  const id = request.params.id;
+  Book.findOne({ '_id': id })
+    .then(bookDetails => {
+      response.render('payment', { book: bookDetails, user });
+    })
+    .catch(error => {
+      console.log('Error: ', error);
+    });
 });
 
+
+app.post('/paymentBook/:id', (request, response, next) => {
+  const { user } = request.session;
+  const id = request.params.id
+  const title = request.body.title;
+  const price = request.body.price;
+  const cardnumber = request.body.cardnumber;
+  const expiredate = request.body.expiredate;
+  const cvv = request.body.cvv;
+  const name = request.body.name;
+
+  console.log('o body  ' , request.body);
+
+  if (cardnumber === '' || expiredate === '' || cvv === "" || name === "") {
+    response.render('/paymentBook/:id', { id }, {
+      errorMessage: 'Please, fill in all credit card details.',
+    });
+    return;
+  }
+  else {
+    const bookBuy = new Payment({ cardNumber: cardnumber, cardExpirationDate: expiredate, cardCvv: cvv, userName: name, price: price, titleBook: title, bookId: id });
+
+    bookBuy.save()
+      .then((bookBuy) => {
+        console.log('Book pay    ', JSON.stringify(bookBuy));
+        response.render('payBookMessage', { bookBuy, user });
+      })
+      .catch(error => {
+        console.log('Error: ', error);
+      });
+  }
+});
 
 
 app.listen(3000, () => console.log('Listen'));

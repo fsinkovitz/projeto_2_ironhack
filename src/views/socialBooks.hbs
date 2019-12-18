@@ -1,27 +1,30 @@
-<nav>
-  <div class="nav-items">
+<div class="divPai">
     <div>
-        <h1 class="title">IRONBOOKS</h1>
-    </div>
-    <div>{{ req.session }}</div>
-    <div class="buttons">
-    <button type="button" class="logout"><a href="./home">Logout</a></button>
-    <button type="button" class="profile"><a href="./profile">Profile</a></button>
-    </div>
-  </div>
-</nav>
-<div>
-    <div>
-        <img src="book-cover" src="{{this.cover}}">
+        <img class="imgCover" src="{{book.cover}}">
     </div>
     <div>
-        <h2>{{this.title}}</h2>
-        <h3>{{this.price}}</h3>
-        <h4>{{this.description}}</h4>
+        <form class="formPayment" id="form" action="/payment/{{ book._id }}" method="GET" enctype="multipart/form-data">
+            <h2>Book Detail</h2>
+            <div>
+                <div class="divDetails">
+                    <div class="divDetailsItems">
+                        <spam class="spamTitle">Title: </spam>
+                        <spam id="title" name="title">{{ book.title }}</spam>
+                    </div>
+                    <div class="divDetailsItems">
+                        <spam class="spamTitle">Description:</spam>
+                        <spam>{{ book.description }}</spam>
+                    </div>
+                    <div class="divDetailsItems">
+                        <spam class="spamTitle">Price:</spam>
+                        <spam name="price" class="spamTitle">{{ book.price }}</spam>
+                    </div>
+                </div>
+                <button type="submit">Buy Book</button>
+                <div>
+                    <button type="button" onclick="javascript:history.back()">Go Back</button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div>
-        <button type="button"><a href="./payment">Buy</a></button>
-    </div>
-    <textarea name="comments" id="1" cols="30" rows="10" placeholder="Comment here..."></textarea>
 </div>
-
