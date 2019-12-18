@@ -10,7 +10,7 @@
             </div>
             <div class="divDetailsItems">
                 <span class="spamTitle">Price: </span>
-                <span class="spamTitle" >{{ book.price }}</span>
+                <span class="spamTitle">{{ book.price }}</span>
             </div>
 
             <input class="inputVisible" type="text" name="title" value='{{ book.title }}'>
@@ -24,10 +24,12 @@
             {{#if errorMessage}}
             <div class="error-message">{{ errorMessage }}</div>
             {{/if}}
-
-            <button type="submit">Pay</button>
-
-            <button type="button" onclick="javascript:history.back()">Go Back</button>
+            <div>
+                <button type="submit">Pay</button>
+            </div>
+            <div>
+                <button type="button" onclick="javascript:history.back()">Go Back</button>
+            </div>
         </form>
     </div>
 </div>

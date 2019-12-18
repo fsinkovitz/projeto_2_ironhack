@@ -46,17 +46,6 @@ app.use(router);
 app.use(['/', '/home'], require('./routes/home'));
 
 
-app.get('/home', (request, response) => {
-  const { user } = request.session;
-  console.log('home user kljflkjflsdjfsd    ' + user)
-  if (user === undefined) {
-    response.render('/auth/login');
-  }
-  else {
-    response.render('home', { user });
-  }
-});
-
 // Retorna a lista dos livros do vendedor logadoo.
 app.get('/listbooksSell', (request, response) => {
   const { user } = request.session;
@@ -68,6 +57,8 @@ app.get('/listbooksSell', (request, response) => {
       console.log('Error: ', error);
     })
 });
+
+
 
 // **********  A D D   --- B O O K S  ***********//
 app.get('/addBooks', (request, response) => {
@@ -232,15 +223,19 @@ app.get('/socialBooks/:id', (request, response, next) => {
 
 app.get('/listbooksBuy', (request, response) => {
   const { user } = request.session;
-  Book.find()
-    .then(bookFromDB => {
-      response.render('listbooksBuy', { books: bookFromDB, user });
-    })
-    .catch(error => {
-      console.log('Error: ', error);
-    })
+  if (user.profile === 2) {
+    response.render('listbooksSell', { user });
+  }
+  else {
+    Book.find()
+      .then(bookFromDB => {
+        response.render('listbooksBuy', { books: bookFromDB, user });
+      })
+      .catch(error => {
+        console.log('Error: ', error);
+      })
+  }
 });
-
 
 
 app.get('/payment/:id', (request, response, next) => {
@@ -254,8 +249,6 @@ app.get('/payment/:id', (request, response, next) => {
       console.log('Error: ', error);
     });
 });
-
-//app.listen(3000, () => console.log('Listen'));
 
 app.post('/paymentBook/:id', (request, response, next) => {
   const { user } = request.session;
