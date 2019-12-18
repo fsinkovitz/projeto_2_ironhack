@@ -49,6 +49,21 @@ app.use(router);
 
 app.use(['/', '/home'], require('./routes/home'));
 
+//ajuste
+app.get('/home', (request, response) => {
+  const {
+    user
+  } = request.session;
+  console.log('home user kljflkjflsdjfsd    ' + user)
+  if (user === undefined) {
+    response.render('/auth/login');
+  } else {
+    response.render('home', {
+      user
+    });
+  }
+});
+
 
 // Retorna a lista dos livros do vendedor logadoo.
 app.get('/listbooksSell', (request, response) => {
