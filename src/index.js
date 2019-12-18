@@ -375,7 +375,7 @@ app.post('/paymentBook/:id', (request, response, next) => {
 
     bookBuy.save()
       .then((bookBuyAdd) => {
-        console.log('Book pay    ', JSON.stringify(bookBuyAdd));
+        console.log('Book pay  ', JSON.stringify(bookBuyAdd));
         response.render('payBookMessage', { newBookBuy: bookBuyAdd, user });
       })
       .catch(error => {
