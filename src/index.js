@@ -43,7 +43,7 @@ app.use(router);
 
 app.use(['/', '/home'], require('./routes/home'));
 
-// Retorna a lista dos livros do vendedor logadoo.
+// Retorna a lista dos livros do vendedor logado.
 app.get('/listbooksSell', (request, response) => {
   const { user } = request.session;
   Book.find({ 'vendorId': user._id })
@@ -240,9 +240,5 @@ app.get('/payment', (request, response) => {
   // console.log(request);
   response.render('payment', { user });
 });
-
-
-
-//app.listen(3000, () => console.log('Listen'));
 
 app.listen(process.env.PORT, () => console.log('Listen'));
