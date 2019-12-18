@@ -252,7 +252,4 @@ router.get('/payment', (request, response) => {
   response.render('payment');
 });
 
-//app.listen(process.env.PORT, () => console.log('Listen'));
-app.listen(3000, () => console.log('Listen'));
-//app.listen(process.env.PORT, () => console.log('Listen'));
-
+app.listen(process.env.PORT, () => console.log('Listen'));
