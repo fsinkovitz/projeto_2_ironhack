@@ -1,4 +1,3 @@
-
 <div class="divPai">
     <div>
         <img class="imgCover" src="{{book.cover}}">
@@ -6,19 +5,22 @@
     <div>
         <form id="form" action="/paymentBook/{{ book._id }}" method="POST">
             <div class="divDetailsItems">
-              <input type="text" id="title" name="title" value=`<spam class="spamTitle">Title: </spam>
-                <spam class="spamTitle" >{{ book.title }}</spam>`>
+                <span class="spamTitle">Title: </span>
+                <span class="spamTitle">{{ book.title }}</span>
             </div>
             <div class="divDetailsItems">
-                <spam class="spamTitle">Price: </spam>
-                <spam class="spamTitle" id="price" name="price">{{ book.price }}</spam>
+                <span class="spamTitle">Price: </span>
+                <span class="spamTitle" >{{ book.price }}</span>
             </div>
+
+            <input class="inputVisible" type="text" name="title" value='{{ book.title }}'>
+            <input class="inputVisible" type="text" name="price" value='{{ book.price }}'>
 
             <input type="text" name="cardnumber" maxlength="16" placeholder="1234XXXX.XXXX.5678">
             <input type="text" name="expiredate" maxlength="5" placeholder="MM/YY">
             <input type="text" name="cvv" maxlength="3" placeholder="CVV">
             <input type="text" name="name" value='{{ user.userName }}' placeholder="Your name">
-         
+
             {{#if errorMessage}}
             <div class="error-message">{{ errorMessage }}</div>
             {{/if}}

@@ -19,9 +19,9 @@ const bcryptSalt = 10;
 const data = require('../src/models/data');
 const uploadCloud = require('./config/cloudnary');
 
-//mongoose.connect('mongodb+srv://jesus:F4iC0I35R5snjcIs@cluster0-3dz7l.azure.mongodb.net/ironbook-users?retryWrites=true&w=majority', { useNewUrlParser: true })
-// DEV mongoose.connect('mongodb://heroku_b6z2mw6l:1djmt1m9tm8sm1kr2hvabeco79@ds351628.mlab.com:51628/heroku_b6z2mw6l', { useNewUrlParser: true })
-mongoose.connect('mongodb://heroku_l3rp0s5l:ocedsjema6l0lq5utsgja79gvv@ds141661.mlab.com:41661/heroku_l3rp0s5l', { useNewUrlParser: true })
+mongoose.connect('mongodb+srv://jesus:F4iC0I35R5snjcIs@cluster0-3dz7l.azure.mongodb.net/ironbook-users?retryWrites=true&w=majority', { useNewUrlParser: true })
+  // DEV mongoose.connect('mongodb://heroku_b6z2mw6l:1djmt1m9tm8sm1kr2hvabeco79@ds351628.mlab.com:51628/heroku_b6z2mw6l', { useNewUrlParser: true })
+  //mongoose.connect('mongodb://heroku_l3rp0s5l:ocedsjema6l0lq5utsgja79gvv@ds141661.mlab.com:41661/heroku_l3rp0s5l', { useNewUrlParser: true })
   .then(() => {
     console.log('Connected to Mongo!');
   })
@@ -56,9 +56,6 @@ app.get('/home', (request, response) => {
     response.render('home', { user });
   }
 });
-
-
-
 
 // Retorna a lista dos livros do vendedor logadoo.
 app.get('/listbooksSell', (request, response) => {
@@ -270,7 +267,7 @@ app.post('/paymentBook/:id', (request, response, next) => {
   const cvv = request.body.cvv;
   const name = request.body.name;
 
-  console.log('o body  ' , request.body);
+  console.log('o body  ', request.body);
 
   if (cardnumber === '' || expiredate === '' || cvv === "" || name === "") {
     response.render('/paymentBook/:id', { id }, {
@@ -282,9 +279,9 @@ app.post('/paymentBook/:id', (request, response, next) => {
     const bookBuy = new Payment({ cardNumber: cardnumber, cardExpirationDate: expiredate, cardCvv: cvv, userName: name, price: price, titleBook: title, bookId: id });
 
     bookBuy.save()
-      .then((bookBuy) => {
-        console.log('Book pay    ', JSON.stringify(bookBuy));
-        response.render('payBookMessage', { bookBuy, user });
+      .then((bookBuyAdd) => {
+        console.log('Book pay    ', JSON.stringify(bookBuyAdd));
+        response.render('payBookMessage', { newBookBuy: bookBuyAdd, user });
       })
       .catch(error => {
         console.log('Error: ', error);
@@ -295,5 +292,4 @@ app.post('/paymentBook/:id', (request, response, next) => {
 
 app.listen(3000, () => console.log('Listen'));
 
-//app.listen(process.env.PORT, () => console.log('Listen'));
 
