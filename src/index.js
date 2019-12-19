@@ -19,9 +19,9 @@ const bcryptSalt = 10;
 const data = require('../src/models/data');
 const uploadCloud = require('./config/cloudnary');
 
-//mongoose.connect('mongodb+srv://jesus:F4iC0I35R5snjcIs@cluster0-3dz7l.azure.mongodb.net/ironbook-users?retryWrites=true&w=majority', { useNewUrlParser: true })
 // DEV mongoose.connect('mongodb://heroku_b6z2mw6l:1djmt1m9tm8sm1kr2hvabeco79@ds351628.mlab.com:51628/heroku_b6z2mw6l', { useNewUrlParser: true })
-mongoose.connect('mongodb://heroku_l3rp0s5l:ocedsjema6l0lq5utsgja79gvv@ds141661.mlab.com:41661/heroku_l3rp0s5l', {
+//mongoose.connect('mongodb://heroku_l3rp0s5l:ocedsjema6l0lq5utsgja79gvv@ds141661.mlab.com:41661/heroku_l3rp0s5l', { useNewUrlParser: true })
+mongoose.connect('mongodb+srv://jesus:F4iC0I35R5snjcIs@cluster0-3dz7l.azure.mongodb.net/ironbook-users?retryWrites=true&w=majority', {
     useNewUrlParser: true
   })
   .then(() => {
@@ -84,6 +84,8 @@ app.get('/listbooksSell', (request, response) => {
       console.log('Error: ', error);
     })
 });
+
+
 
 // **********  A D D   --- B O O K S  ***********//
 app.get('/addBooks', (request, response) => {
@@ -323,18 +325,23 @@ app.get('/listbooksBuy', (request, response) => {
   const {
     user
   } = request.session;
-  Book.find()
-    .then(bookFromDB => {
-      response.render('listbooksBuy', {
-        books: bookFromDB,
-        user
-      });
-    })
-    .catch(error => {
-      console.log('Error: ', error);
-    })
+  if (user.profile === 2) {
+    response.render('listbooksSell', {
+      user
+    });
+  } else {
+    Book.find()
+      .then(bookFromDB => {
+        response.render('listbooksBuy', {
+          books: bookFromDB,
+          user
+        });
+      })
+      .catch(error => {
+        console.log('Error: ', error);
+      })
+  }
 });
-
 
 
 app.get('/payment/:id', (request, response, next) => {
@@ -355,8 +362,6 @@ app.get('/payment/:id', (request, response, next) => {
       console.log('Error: ', error);
     });
 });
-
-//app.listen(3000, () => console.log('Listen'));
 
 app.post('/paymentBook/:id', (request, response, next) => {
   const {
@@ -391,10 +396,10 @@ app.post('/paymentBook/:id', (request, response, next) => {
     });
 
     bookBuy.save()
-      .then((bookBuy) => {
-        console.log('Book pay    ', JSON.stringify(bookBuy));
+      .then((bookBuyAdd) => {
+        console.log('Book pay    ', JSON.stringify(bookBuyAdd));
         response.render('payBookMessage', {
-          bookBuy,
+          newBookBuy: bookBuyAdd,
           user
         });
       })
@@ -405,6 +410,7 @@ app.post('/paymentBook/:id', (request, response, next) => {
 });
 
 
-//app.listen(3000, () => console.log('Listen'));
+app.listen(3000, () => console.log('Listen'));
+
 
 app.listen(process.env.PORT, () => console.log('Listen'));
