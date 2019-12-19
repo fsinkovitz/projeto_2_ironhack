@@ -49,7 +49,6 @@ app.use(router);
 
 app.use(['/', '/home'], require('./routes/home'));
 
-
 app.get('/home', (request, response) => {
   const {
     user
